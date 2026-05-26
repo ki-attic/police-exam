@@ -9,58 +9,79 @@
 </head>
 <body>
 <div class="topbar">
-  <a class="back" href="index.html">‹ 返回</a>
+  <a class="back" href="index.html" onclick="if(history.length>1){history.back();return false;}">‹ 返回</a>
   <h1 id="subjTitle">科目</h1>
 </div>
 
 <div class="page" id="page"><div class="empty">載入中…</div></div>
 
-<div class="footer-note">法條/試題來源:全國法規資料庫、考選部考畢試題</div>
+<div class="footer-note">法條來源:全國法規資料庫　·　試題來源:考選部考畢試題</div>
 
 <script src="assets/store.js"></script>
 <script src="data/manifest.js"></script>
 <script>
 (function(){
   function esc(s){ return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
-  var m = location.search.match(/[?&]subject=([^&]*)/);
-  var subj = m ? decodeURIComponent(m[1]) : '';
+  function qp(k){ var m = location.search.match(new RegExp('[?&]'+k+'=([^&]*)')); return m ? decodeURIComponent(m[1]) : ''; }
+  var subj = qp('subject'), view = qp('view');
   document.getElementById('subjTitle').textContent = subj || '科目';
   document.title = subj || '科目';
-  var banks = (window.EXAM_MANIFEST || []).filter(function(x){ return x.subject === subj; });
   var page = document.getElementById('page');
-  if(!banks.length){ page.innerHTML = '<div class="empty">此科目尚無題庫。</div>'; return; }
 
-  // 依序載入各題庫資料檔以取得題數
+  var all = (window.EXAM_MANIFEST || []).filter(function(x){ return x.subject === subj; });
+  var lawBanks = all.filter(function(x){ return x.law; });
+  var examBanks = all.filter(function(x){ return !x.law; });
+  if(!all.length){ page.innerHTML = '<div class="empty">此科目尚無內容。</div>'; return; }
+
+  // ---- 法條清單檢視 ----
+  if(view === 'laws'){
+    document.getElementById('subjTitle').textContent = subj + '　法條';
+    var rows = lawBanks.map(function(x){
+      return '<a class="card" href="law.html?law=' + encodeURIComponent(x.id) + '">'
+           + '<div class="title"><span class="emo">📖</span> ' + esc(x.name) + '</div>'
+           + '<div class="desc">點開閱讀完整條文(可搜尋)</div></a>';
+    }).join('');
+    page.innerHTML = '<div class="page-icon">📖</div><h1 class="page-title">' + esc(subj) + ' · 法條</h1>'
+      + '<p class="page-sub">' + lawBanks.length + ' 部法規 · 全國法規資料庫官方條文</p>'
+      + '<div class="grid">' + rows + '</div>';
+    return;
+  }
+
+  // ---- 科目樞紐(載入各題庫以計題數)----
   var i = 0;
   (function next(){
-    if(i >= banks.length) return render();
-    var s = document.createElement('script');
-    s.src = banks[i].file;
+    if(i >= all.length) return renderHub();
+    var s = document.createElement('script'); s.src = all[i].file;
     s.onload = s.onerror = function(){ i++; next(); };
     document.body.appendChild(s);
   })();
 
-  function render(){
+  function renderHub(){
     var B = window.BANKS || {};
-    var total = 0;
-    var cards = banks.map(function(x){
-      var bk = B[x.id] || {};
-      var c = bk.mcq ? bk.mcq.length : 0, cl = bk.cloze ? bk.cloze.length : 0;
-      total += c + cl;
-      var desc = (c ? c + ' 選擇題' : '') + (cl ? (c ? ' · ' : '') + cl + ' 填空題' : '');
-      var wrong = (window.Store ? Store.bankWrongCount(x.id) : 0);
-      if(wrong) desc += ' · 錯題 ' + wrong;
-      return '<a class="card" href="law.html?law=' + encodeURIComponent(x.id) + '">'
-           + '<div class="title"><span class="emo">📄</span> ' + esc(x.name) + '</div>'
-           + '<div class="desc">' + (desc || '題庫') + '</div></a>';
-    }).join('');
-    page.innerHTML =
-        '<div class="page-icon">📚</div>'
+    var examQ = 0, examWrong = 0;
+    all.forEach(function(x){
+      var bk = B[x.id]; if(!bk) return;
+      examQ += (bk.mcq?bk.mcq.length:0) + (bk.cloze?bk.cloze.length:0);
+      examWrong += (window.Store ? Store.bankWrongCount(x.id) : 0);
+    });
+    var icon = subj === '警察法規' ? '🚓' : subj === '法學知識與英文' ? '⚖️' : subj === '行政法' ? '🏛️' : '📚';
+    var cards = '';
+    if(lawBanks.length){
+      cards += '<a class="card" href="subject.html?subject=' + encodeURIComponent(subj) + '&view=laws">'
+        + '<div class="title"><span class="emo">📖</span> 法條</div>'
+        + '<div class="desc">' + lawBanks.length + ' 部法規完整條文,可閱讀、搜尋</div></a>';
+    }
+    cards += '<a class="card" href="review.html?subject=' + encodeURIComponent(subj) + '">'
+      + '<div class="title"><span class="emo">✍️</span> 測驗題複習</div>'
+      + '<div class="desc">歷年考古題混合練習,共 ' + examQ + ' 題' + (examWrong?(' · 錯題 '+examWrong):'') + '</div></a>';
+    cards += '<a class="card" href="review.html">'
+      + '<div class="title"><span class="emo">🎯</span> 總複習</div>'
+      + '<div class="desc">跨科目綜合測驗 · 我的錯題</div></a>';
+
+    page.innerHTML = '<div class="page-icon">' + icon + '</div>'
       + '<h1 class="page-title">' + esc(subj) + '</h1>'
-      + '<p class="page-sub">' + banks.length + ' 個題庫 · 合計 ' + total + ' 題</p>'
-      + '<div class="callout"><span class="ico">🎯</span><span>想跨年度/跨科混合練習,用下方「總複習」的綜合測驗。</span></div>'
-      + '<div class="label">題庫</div><div class="grid">' + cards + '</div>'
-      + '<a class="btn ghost" href="review.html" style="max-width:360px;margin:18px auto 0">🎯 前往總複習(綜合測驗 · 錯題複習)</a>';
+      + '<p class="page-sub">選擇複習方式</p>'
+      + '<div class="grid">' + cards + '</div>';
   }
 })();
 </script>

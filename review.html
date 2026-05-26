@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="topbar">
-  <a class="back" href="index.html">‹ 返回</a>
+  <a class="back" href="index.html" onclick="if(history.length>1){history.back();return false;}">‹ 返回</a>
   <h1 id="topTitle">總複習</h1>
 </div>
 
@@ -40,7 +40,9 @@
     })();
   }
 
-  function readyBanks(){ return (window.EXAM_MANIFEST||[]).filter(function(m){ return (window.BANKS||{})[m.id]; }); }
+  function qp(k){ var m=location.search.match(new RegExp('[?&]'+k+'=([^&]*)')); return m?decodeURIComponent(m[1]):''; }
+  var SUBJ = qp('subject');
+  function readyBanks(){ return (window.EXAM_MANIFEST||[]).filter(function(m){ return (window.BANKS||{})[m.id] && (!SUBJ || m.subject===SUBJ); }); }
 
   function allItems(){
     var items = [];
@@ -68,7 +70,7 @@
   function renderMenu(){
     view.style.display = 'none';
     menu.style.display = 'block';
-    topTitle.textContent = '總複習';
+    topTitle.textContent = SUBJ ? (SUBJ + ' · 測驗題複習') : '總複習';
     var s = Store.stats();
     var pct = s.answered ? Math.round(s.correct / s.answered * 100) : 0;
     var wrong = Store.totalWrong();
@@ -82,19 +84,20 @@
            + '<div class="desc">'+m.subject+' · 錯題 '+c+' 題</div></a>';
     }).join('');
 
+    var pickDesc = SUBJ ? '歷年考古題隨機抽題' : '全部科目隨機抽題';
     menu.innerHTML =
-        '<div class="page-icon">🎯</div>'
-      + '<h1 class="page-title">總複習</h1>'
-      + '<p class="page-sub">統整全部科目,一次練到飽</p>'
-      + '<div class="callout"><span class="ico">📊</span><span>累計作答 <strong>'+s.answered+'</strong> 題,答對率 <strong>'+pct+'%</strong>　·　待複習錯題 <strong>'+wrong+'</strong> 題　·　題庫共 <strong>'+poolN+'</strong> 題</span></div>'
+        '<div class="page-icon">'+(SUBJ?'✍️':'🎯')+'</div>'
+      + '<h1 class="page-title">'+(SUBJ ? (SUBJ+' · 測驗題複習') : '總複習')+'</h1>'
+      + '<p class="page-sub">'+(SUBJ?'歷年考古題混合練習(年份見題目標註)':'統整全部科目,一次練到飽')+'</p>'
+      + '<div class="callout"><span class="ico">📊</span><span>累計作答 <strong>'+s.answered+'</strong> 題,答對率 <strong>'+pct+'%</strong>　·　待複習錯題 <strong>'+wrong+'</strong> 題　·　'+(SUBJ?'本科':'題庫')+'共 <strong>'+poolN+'</strong> 題</span></div>'
       + '<div class="label">開始複習</div>'
       + '<div class="grid">'
       + '<a class="card" id="mWrong"><div class="title"><span class="emo">❗</span> 我的錯題複習</div><div class="desc">'+(wrong?('共 '+wrong+' 題,可反覆練習(手動清除才移除)'):'目前沒有錯題 🎉')+'</div></a>'
-      + '<a class="card" id="mMix10"><div class="title"><span class="emo">🔀</span> 綜合測驗 · 10 題</div><div class="desc">全部科目隨機抽題</div></a>'
-      + '<a class="card" id="mMix20"><div class="title"><span class="emo">🔀</span> 綜合測驗 · 20 題</div><div class="desc">全部科目隨機抽題</div></a>'
-      + '<a class="card" id="mMixAll"><div class="title"><span class="emo">📚</span> 綜合測驗 · 全部</div><div class="desc">全部科目共 '+poolN+' 題</div></a>'
+      + '<a class="card" id="mMix10"><div class="title"><span class="emo">🔀</span> 混合測驗 · 10 題</div><div class="desc">'+pickDesc+'</div></a>'
+      + '<a class="card" id="mMix20"><div class="title"><span class="emo">🔀</span> 混合測驗 · 20 題</div><div class="desc">'+pickDesc+'</div></a>'
+      + '<a class="card" id="mMixAll"><div class="title"><span class="emo">📚</span> 混合測驗 · 全部</div><div class="desc">共 '+poolN+' 題</div></a>'
       + '</div>'
-      + '<div class="label">各科錯題</div>'
+      + '<div class="label">'+(SUBJ?'各年度/題庫錯題':'各科錯題')+'</div>'
       + '<div class="grid">' + (rows || '<div class="card locked"><div class="title">尚無題庫</div></div>') + '</div>'
       + (wrong ? '<button class="btn ghost" id="clearWrong" style="max-width:320px;margin:18px auto 0">清除全部錯題記錄</button>' : '');
 
