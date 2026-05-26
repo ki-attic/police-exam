@@ -6,7 +6,9 @@ window.EXAM_MANIFEST = [
   { id: "pastexam-114", name: "警察法規 考古題·114年", subject: "警察法規", file: "data/pastexam-114.js" },
   { id: "pastexam-112", name: "警察法規 考古題·112年", subject: "警察法規", file: "data/pastexam-112.js" },
   { id: "pastexam-111", name: "警察法規 考古題·111年", subject: "警察法規", file: "data/pastexam-111.js" },
-  { id: "lk-108", name: "法學知識與英文 考古題·108年", subject: "法學知識與英文", file: "data/lk-108.js" }
+  { id: "lk-108", name: "法學知識與英文 考古題·108年", subject: "法學知識與英文", file: "data/lk-108.js" },
+  { id: "lk-114", name: "法學知識與英文 考古題·114年", subject: "法學知識與英文", file: "data/lk-114.js" },
+  { id: "lk-113", name: "法學知識與英文 考古題·113年", subject: "法學知識與英文", file: "data/lk-113.js" }
   // 之後新增,例如:
   // { id: "police-act", name: "警察法", subject: "警察法規", file: "data/police-act.js" },
 ];
