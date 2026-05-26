@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>科目</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="back" href="index.html">‹ 返回</a>
+  <h1 id="subjTitle">科目</h1>
+</div>
+
+<div class="page" id="page"><div class="empty">載入中…</div></div>
+
+<div class="footer-note">法條/試題來源:全國法規資料庫、考選部考畢試題</div>
+
+<script src="assets/store.js"></script>
+<script src="data/manifest.js"></script>
+<script>
+(function(){
+  function esc(s){ return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+  var m = location.search.match(/[?&]subject=([^&]*)/);
+  var subj = m ? decodeURIComponent(m[1]) : '';
+  document.getElementById('subjTitle').textContent = subj || '科目';
+  document.title = subj || '科目';
+  var banks = (window.EXAM_MANIFEST || []).filter(function(x){ return x.subject === subj; });
+  var page = document.getElementById('page');
+  if(!banks.length){ page.innerHTML = '<div class="empty">此科目尚無題庫。</div>'; return; }
+
+  // 依序載入各題庫資料檔以取得題數
+  var i = 0;
+  (function next(){
+    if(i >= banks.length) return render();
+    var s = document.createElement('script');
+    s.src = banks[i].file;
+    s.onload = s.onerror = function(){ i++; next(); };
+    document.body.appendChild(s);
+  })();
+
+  function render(){
+    var B = window.BANKS || {};
+    var total = 0;
+    var cards = banks.map(function(x){
+      var bk = B[x.id] || {};
+      var c = bk.mcq ? bk.mcq.length : 0, cl = bk.cloze ? bk.cloze.length : 0;
+      total += c + cl;
+      var desc = (c ? c + ' 選擇題' : '') + (cl ? (c ? ' · ' : '') + cl + ' 填空題' : '');
+      var wrong = (window.Store ? Store.bankWrongCount(x.id) : 0);
+      if(wrong) desc += ' · 錯題 ' + wrong;
+      return '<a class="card" href="law.html?law=' + encodeURIComponent(x.id) + '">'
+           + '<div class="title"><span class="emo">📄</span> ' + esc(x.name) + '</div>'
+           + '<div class="desc">' + (desc || '題庫') + '</div></a>';
+    }).join('');
+    page.innerHTML =
+        '<div class="page-icon">📚</div>'
+      + '<h1 class="page-title">' + esc(subj) + '</h1>'
+      + '<p class="page-sub">' + banks.length + ' 個題庫 · 合計 ' + total + ' 題</p>'
+      + '<div class="callout"><span class="ico">🎯</span><span>想跨年度/跨科混合練習,用下方「總複習」的綜合測驗。</span></div>'
+      + '<div class="label">題庫</div><div class="grid">' + cards + '</div>'
+      + '<a class="btn ghost" href="review.html" style="max-width:360px;margin:18px auto 0">🎯 前往總複習(綜合測驗 · 錯題複習)</a>';
+  }
+})();
+</script>
+</body>
+</html>
