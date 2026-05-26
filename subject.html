@@ -48,12 +48,14 @@
   }
 
   // ---- 科目樞紐(載入各題庫以計題數)----
-  var i = 0;
-  (function next(){
-    if(i >= all.length) return renderHub();
-    var s = document.createElement('script'); s.src = all[i].file;
-    s.onload = s.onerror = function(){ i++; next(); };
-    document.body.appendChild(s);
+  (function(){
+    if(!all.length) return renderHub();
+    var remaining = all.length;
+    all.forEach(function(item){
+      var s = document.createElement('script'); s.src = item.file;
+      s.onload = s.onerror = function(){ if(--remaining === 0) renderHub(); };
+      document.body.appendChild(s);
+    });
   })();
 
   function renderHub(){

@@ -30,14 +30,14 @@
   var topTitle = document.getElementById('topTitle');
 
   function loadAll(list, done){
-    var i = 0;
-    (function next(){
-      if(i >= list.length) return done();
+    if(!list.length) return done();
+    var remaining = list.length;
+    list.forEach(function(item){
       var s = document.createElement('script');
-      s.src = list[i].file;
-      s.onload = s.onerror = function(){ i++; next(); };
+      s.src = item.file;
+      s.onload = s.onerror = function(){ if(--remaining === 0) done(); };
       document.body.appendChild(s);
-    })();
+    });
   }
 
   function qp(k){ var m=location.search.match(new RegExp('[?&]'+k+'=([^&]*)')); return m?decodeURIComponent(m[1]):''; }
