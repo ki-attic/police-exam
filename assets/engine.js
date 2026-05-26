@@ -93,8 +93,8 @@ window.PE = (function(){
     function finish(correct, q){
       answered = true;
       Store.recordAnswer(correct);
-      if(correct) Store.markCorrect(q.bankId, q.kind, q.idx);
-      else Store.markWrong(q.bankId, q.kind, q.idx);
+      // 答錯記錄錯題;答對「不」自動移除(錯題保留,只能手動清除)
+      if(!correct) Store.markWrong(q.bankId, q.kind, q.idx);
       if(correct) score++;
       document.getElementById('nextBtn').style.display = 'block';
       if(opts.onChange) opts.onChange();
