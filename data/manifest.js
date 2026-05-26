@@ -15,7 +15,6 @@ window.EXAM_MANIFEST = [
   { id: "pastexam-113", name: "警察法規 考古題·113年", subject: "警察法規", file: "data/pastexam-113.js" },
   { id: "pastexam-114", name: "警察法規 考古題·114年", subject: "警察法規", file: "data/pastexam-114.js" },
 
-  { id: "lk-108", name: "法學知識與英文 考古題·108年", subject: "法學知識與英文", file: "data/lk-108.js" },
   { id: "lk-113", name: "法學知識與英文 考古題·113年", subject: "法學知識與英文", file: "data/lk-113.js" },
   { id: "lk-114", name: "法學知識與英文 考古題·114年", subject: "法學知識與英文", file: "data/lk-114.js" },
 
