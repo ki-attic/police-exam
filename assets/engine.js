@@ -164,11 +164,17 @@ window.PE = (function(){
     var srcEl = document.getElementById('srcMeta'); if(srcEl) srcEl.textContent = (bank.meta.source||'');
 
     var tabs = document.querySelectorAll('.tabs button');
+    // 依題庫實際內容隱藏沒資料的分頁(考古題庫通常只有選擇題)
+    var has = { read:!!(bank.articles&&bank.articles.length), mcq:!!(bank.mcq&&bank.mcq.length),
+                cloze:!!(bank.cloze&&bank.cloze.length), wrong:true };
+    tabs.forEach(function(b){ if(!has[b.dataset.mode]) b.style.display='none'; });
     function refreshWrongTab(){
       var t = document.querySelector('.tabs button[data-mode="wrong"]');
       if(t) t.textContent = '❗ 錯題 (' + Store.bankWrongCount(bankId) + ')';
     }
-    var mode = 'read';
+    var mode = has.read ? 'read' : 'mcq';
+    tabs.forEach(function(x){ x.classList.remove('active'); });
+    var firstTab = document.querySelector('.tabs button[data-mode="'+mode+'"]'); if(firstTab) firstTab.classList.add('active');
     function render(){
       refreshWrongTab();
       if(mode === 'read')  return renderRead(view, bank.articles);
