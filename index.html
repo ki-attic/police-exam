@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>警察考試複習</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="page">
+  <div class="page-icon">🚓</div>
+  <h1 class="page-title">警察考試複習</h1>
+  <p class="page-sub">法規題庫 · 英文單字文法 · 隨身複習</p>
+
+  <div class="callout">
+    <span class="ico">📌</span>
+    <span>點下方科目開始複習。所有法條皆取自<strong>全國法規資料庫</strong>官方原文,每題附完整詳解。</span>
+  </div>
+
+  <div class="label">複習工具</div>
+  <div class="grid">
+    <a class="card" href="review.html">
+      <div class="title"><span class="emo">🎯</span> 總複習</div>
+      <div class="desc">統整全部科目 · 綜合測驗 · 錯題複習</div>
+      <span class="tag ready">已開放</span>
+    </a>
+  </div>
+
+  <div class="label">應試科目</div>
+  <div class="grid">
+
+    <a class="card" href="law-index.html">
+      <div class="title"><span class="emo">📚</span> 警察法規</div>
+      <div class="desc">警察法、行政執行法、社維法、槍砲條例、集遊法、警械條例、警職法</div>
+      <span class="tag ready">已開放</span>
+    </a>
+
+    <a class="card locked" href="#" onclick="return soon('法學知識與英文')">
+      <div class="title"><span class="emo">⚖️</span> 法學知識與英文</div>
+      <div class="desc">中華民國憲法 30%、法學緒論 30%、英文 40%</div>
+      <span class="tag soon">即將推出</span>
+    </a>
+
+    <a class="card locked" href="#" onclick="return soon('行政法')">
+      <div class="title"><span class="emo">🏛️</span> 行政法</div>
+      <div class="desc">測驗式試題</div>
+      <span class="tag soon">即將推出</span>
+    </a>
+
+    <a class="card locked" href="#" onclick="return soon('刑法與刑事訴訟法實務')">
+      <div class="title"><span class="emo">🔍</span> 刑法與刑事訴訟法實務</div>
+      <div class="desc">申論式試題</div>
+      <span class="tag soon">即將推出</span>
+    </a>
+
+    <a class="card locked" href="#" onclick="return soon('警察勤務')">
+      <div class="title"><span class="emo">👮</span> 警察勤務</div>
+      <div class="desc">申論式試題</div>
+      <span class="tag soon">即將推出</span>
+    </a>
+
+    <a class="card locked" href="#" onclick="return soon('國文')">
+      <div class="title"><span class="emo">✏️</span> 國文</div>
+      <div class="desc">作文 80%、測驗 20%</div>
+      <span class="tag soon">即將推出</span>
+    </a>
+
+  </div>
+
+  <div class="label">英文加強</div>
+  <div class="grid">
+    <a class="card locked" href="#" onclick="return soon('英文單字')">
+      <div class="title"><span class="emo">🔤</span> 警察英文單字</div>
+      <div class="desc">考試常出單字 · 例句記憶</div>
+      <span class="tag soon">即將推出</span>
+    </a>
+    <a class="card locked" href="#" onclick="return soon('英文文法')">
+      <div class="title"><span class="emo">📝</span> 英文文法</div>
+      <div class="desc">常考文法重點 · 題型練習</div>
+      <span class="tag soon">即將推出</span>
+    </a>
+  </div>
+
+  <div class="footer-note">法條來源:全國法規資料庫 law.moj.gov.tw · 僅供複習自學使用</div>
+</div>
+
+<script>
+function soon(name){ alert(name + ' 即將推出!\n目前已先完成「警察法規」,確認格式滿意後會陸續開放。'); return false; }
+</script>
+</body>
+</html>

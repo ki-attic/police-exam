@@ -1,0 +1,200 @@
+/* ===== 警察考試複習 — Notion 風格(手機優先) ===== */
+:root {
+  --text: #37352f;
+  --text-2: #787774;
+  --text-3: rgba(55,53,47,.45);
+  --border: #e9e9e7;
+  --border-strong: rgba(55,53,47,.16);
+  --hover: rgba(55,53,47,.06);
+  --bg: #ffffff;
+  --bg-2: #f7f7f5;
+  --blue: #2383e2;
+  --blue-bg: #e7f3f8;
+  --green: #448361;
+  --green-bg: #edf3ec;
+  --red: #d44c47;
+  --red-bg: #fdebec;
+  --yellow-bg: #faf3dd;
+  --callout: #f1f1ef;
+  --r: 6px;
+  --r-sm: 4px;
+  --maxw: 720px;
+  --font: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.65;
+  font-size: 16px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+a { color: inherit; text-decoration: none; }
+
+/* ---- 頂部麵包屑列(Notion 風) ---- */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: saturate(180%) blur(8px);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
+  padding-top: calc(10px + env(safe-area-inset-top));
+  display: flex; align-items: center; gap: 8px;
+  color: var(--text);
+}
+.topbar .back {
+  font-size: 15px; color: var(--text-2);
+  padding: 4px 8px; border-radius: var(--r-sm);
+  display: flex; align-items: center; gap: 4px;
+}
+.topbar .back:active { background: var(--hover); }
+.topbar h1 { font-size: 15px; margin: 0; font-weight: 600; flex: 1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.topbar .sub { font-size: 12px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+
+/* ---- 頁面容器 ---- */
+.wrap, .page { max-width: var(--maxw); margin: 0 auto; padding: 18px 20px 40px; }
+
+/* ---- Notion 頁面標題 ---- */
+.page-icon { font-size: 56px; line-height: 1; margin: 18px 0 8px; }
+.page-title { font-size: 32px; font-weight: 700; letter-spacing: -.01em; margin: 0 0 6px; }
+.page-sub { color: var(--text-2); margin: 0 0 22px; font-size: 15px; }
+
+/* ---- 小標籤 ---- */
+.section-title, .label {
+  font-size: 12px; color: var(--text-3); font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; margin: 26px 0 10px;
+}
+
+/* ---- Notion callout ---- */
+.callout {
+  display: flex; gap: 10px; align-items: flex-start;
+  background: var(--callout); border-radius: var(--r);
+  padding: 14px 16px; font-size: 14.5px; color: var(--text);
+  margin: 4px 0 8px;
+}
+.callout .ico { flex: none; font-size: 18px; line-height: 1.5; }
+
+/* ---- 卡片(科目/法規) ---- */
+.grid { display: grid; gap: 1px; grid-template-columns: 1fr; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+@media (min-width: 560px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+.card {
+  display: block; background: var(--bg); padding: 15px 16px;
+  transition: background .08s ease;
+}
+.card:active, .card:hover { background: var(--hover); }
+.card.locked { color: var(--text-3); }
+.card.locked .desc { color: var(--text-3); }
+.card .title { font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 9px; }
+.card .title .emo { font-size: 19px; }
+.card .desc { font-size: 13px; color: var(--text-2); margin-top: 3px; padding-left: 28px; }
+.card .tag {
+  display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 3px;
+  margin-top: 9px; margin-left: 28px; font-weight: 500;
+}
+.card .tag.ready { background: var(--green-bg); color: var(--green); }
+.card .tag.soon  { background: var(--callout); color: var(--text-3); }
+
+/* ---- 底線式分頁(Notion database view 風) ---- */
+.tabs {
+  display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 18px;
+}
+.tabs button {
+  border: 0; background: transparent; padding: 9px 6px 10px; margin-right: 6px;
+  font-size: 14.5px; font-weight: 500; color: var(--text-2); cursor: pointer;
+  font-family: inherit; border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.tabs button:active { background: var(--hover); }
+.tabs button.active { color: var(--text); border-bottom-color: var(--text); font-weight: 600; }
+
+/* ---- 法條閱讀 ---- */
+.law-search {
+  width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--r);
+  font-size: 15px; margin-bottom: 6px; font-family: inherit; background: var(--bg-2);
+  color: var(--text);
+}
+.law-search:focus { outline: none; border-color: var(--border-strong); background: var(--bg); }
+.chapter { font-size: 19px; font-weight: 700; color: var(--text); margin: 26px 0 4px; }
+.article { padding: 14px 2px 14px; border-top: 1px solid var(--border); }
+.article .no { font-weight: 600; color: var(--text); margin-bottom: 4px; font-size: 14px; }
+.article .body { white-space: pre-wrap; font-size: 15.5px; color: var(--text); }
+.article.hidden { display: none; }
+mark { background: #fdecc8; color: inherit; padding: 0 2px; border-radius: 2px; }
+
+/* ---- 測驗 ---- */
+.quiz-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+  font-size: 13px; color: var(--text-2); }
+.progress { height: 4px; background: var(--border); border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
+.progress > i { display: block; height: 100%; background: var(--blue); width: 0; transition: width .3s; }
+
+.qcard { padding: 2px 0; }
+.qref { font-size: 12px; color: var(--text-3); font-weight: 600; margin-bottom: 8px;
+  letter-spacing: .03em; }
+.qtext { font-size: 17px; font-weight: 600; margin-bottom: 18px; line-height: 1.6; }
+.qtext .blank { display: inline-block; min-width: 54px; border-bottom: 2px solid var(--blue);
+  text-align: center; font-weight: 700; color: var(--blue); padding: 0 6px; }
+
+.opt {
+  display: flex; align-items: flex-start; gap: 11px; width: 100%;
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 12px 14px; margin-bottom: 9px; cursor: pointer; text-align: left;
+  font-size: 15.5px; font-family: inherit; color: var(--text); transition: background .1s, border-color .1s;
+}
+.opt .mk { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--border-strong);
+  display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; color: var(--text-2); }
+.opt:hover { background: var(--hover); }
+.opt.correct { background: var(--green-bg); border-color: #c6e0cd; }
+.opt.correct .mk { background: var(--green); border-color: var(--green); color: #fff; }
+.opt.wrong { background: var(--red-bg); border-color: #f3c9c7; }
+.opt.wrong .mk { background: var(--red); border-color: var(--red); color: #fff; }
+.opt.dim { opacity: .5; }
+.opt[disabled] { cursor: default; }
+.opt[disabled]:hover { background: var(--bg); }
+.opt.correct[disabled]:hover { background: var(--green-bg); }
+.opt.wrong[disabled]:hover { background: var(--red-bg); }
+
+/* ---- 詳解 callout ---- */
+.explain {
+  margin-top: 16px; background: var(--callout); border-radius: var(--r);
+  padding: 14px 16px; font-size: 14.5px; display: none; line-height: 1.7;
+}
+.explain.show { display: block; }
+.explain .lab { font-weight: 600; color: var(--text); font-size: 13px; margin-bottom: 6px; }
+.explain .ans { font-weight: 600; color: var(--green); }
+.explain .law-quote { margin-top: 12px; padding: 2px 0 2px 14px; border-left: 3px solid var(--border-strong);
+  font-size: 13.5px; color: var(--text-2); white-space: pre-wrap; }
+
+/* ---- 填空題選項 ---- */
+.cloze-opts { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.chip { border: 1px solid var(--border); background: var(--bg); border-radius: var(--r-sm); padding: 7px 15px;
+  font-size: 15px; cursor: pointer; font-family: inherit; color: var(--text); transition: background .1s; }
+.chip:hover { background: var(--hover); }
+.chip.correct { background: var(--green-bg); color: var(--green); border-color: #c6e0cd; }
+.chip.wrong { background: var(--red-bg); color: var(--red); border-color: #f3c9c7; }
+
+/* ---- 按鈕 ---- */
+.btn {
+  display: block; width: 100%; border: 1px solid transparent; border-radius: var(--r); padding: 11px;
+  font-size: 15px; font-weight: 500; font-family: inherit; cursor: pointer; margin-top: 16px;
+}
+.btn.primary { background: var(--blue); color: #fff; }
+.btn.primary:disabled { background: #b9d6f2; }
+.btn.ghost { background: var(--bg); color: var(--text); border-color: var(--border-strong); }
+.btn:active { filter: brightness(.97); }
+
+/* ---- 結算 ---- */
+.result { text-align: center; padding: 36px 20px; }
+.result .score { font-size: 44px; font-weight: 700; color: var(--text); }
+.result .msg { color: var(--text-2); margin: 8px 0 4px; font-size: 15px; }
+.result .btn { max-width: 320px; margin: 18px auto 0; }
+
+.empty { text-align: center; color: var(--text-3); padding: 50px 20px; }
+.footer-note { text-align: center; font-size: 12px; color: var(--text-3); padding: 30px 20px 36px; }
+.footer-note a { color: var(--text-3); text-decoration: underline; }

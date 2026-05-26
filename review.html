@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>總複習</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="back" href="index.html">‹ 返回</a>
+  <h1 id="topTitle">總複習</h1>
+</div>
+
+<div class="wrap">
+  <div id="menu"></div>
+  <div id="view" style="display:none"></div>
+</div>
+
+<div class="footer-note">統整全部科目 · 錯題會自動記錄在此裝置</div>
+
+<script src="assets/store.js"></script>
+<script src="assets/engine.js"></script>
+<script src="data/manifest.js"></script>
+<script>
+(function(){
+  var menu = document.getElementById('menu');
+  var view = document.getElementById('view');
+  var topTitle = document.getElementById('topTitle');
+
+  function loadAll(list, done){
+    var i = 0;
+    (function next(){
+      if(i >= list.length) return done();
+      var s = document.createElement('script');
+      s.src = list[i].file;
+      s.onload = s.onerror = function(){ i++; next(); };
+      document.body.appendChild(s);
+    })();
+  }
+
+  function readyBanks(){ return (window.EXAM_MANIFEST||[]).filter(function(m){ return (window.BANKS||{})[m.id]; }); }
+
+  function allItems(){
+    var items = [];
+    readyBanks().forEach(function(m){ var b = window.BANKS[m.id];
+      items = items.concat(PE.mcqItems(m.id, b, m.name), PE.clozeItems(m.id, b, m.name)); });
+    return items;
+  }
+  function allWrong(){
+    var items = [];
+    readyBanks().forEach(function(m){ var b = window.BANKS[m.id];
+      items = items.concat(PE.wrongItems(m.id, b, m.name)); });
+    return items;
+  }
+
+  function startQuiz(title, items, emptyMsg){
+    if(!items.length){ alert(emptyMsg || '目前沒有題目。'); return; }
+    menu.style.display = 'none';
+    view.style.display = 'block';
+    topTitle.textContent = title;
+    view.innerHTML = '<button class="btn ghost" id="backMenu" style="margin:0 0 16px">‹ 回總複習選單</button><div id="quizMount"></div>';
+    document.getElementById('backMenu').addEventListener('click', renderMenu);
+    PE.runQuiz(document.getElementById('quizMount'), items, { emptyMsg: emptyMsg });
+  }
+
+  function renderMenu(){
+    view.style.display = 'none';
+    menu.style.display = 'block';
+    topTitle.textContent = '總複習';
+    var s = Store.stats();
+    var pct = s.answered ? Math.round(s.correct / s.answered * 100) : 0;
+    var wrong = Store.totalWrong();
+    var ready = readyBanks();
+    var poolN = allItems().length;
+
+    var rows = ready.map(function(m){
+      var c = Store.bankWrongCount(m.id);
+      return '<a class="card" href="law.html?law='+m.id+'">'
+           + '<div class="title"><span class="emo">📘</span> '+m.name+'</div>'
+           + '<div class="desc">'+m.subject+' · 錯題 '+c+' 題</div></a>';
+    }).join('');
+
+    menu.innerHTML =
+        '<div class="page-icon">🎯</div>'
+      + '<h1 class="page-title">總複習</h1>'
+      + '<p class="page-sub">統整全部科目,一次練到飽</p>'
+      + '<div class="callout"><span class="ico">📊</span><span>累計作答 <strong>'+s.answered+'</strong> 題,答對率 <strong>'+pct+'%</strong>　·　待複習錯題 <strong>'+wrong+'</strong> 題　·　題庫共 <strong>'+poolN+'</strong> 題</span></div>'
+      + '<div class="label">開始複習</div>'
+      + '<div class="grid">'
+      + '<a class="card" id="mWrong"><div class="title"><span class="emo">❗</span> 我的錯題複習</div><div class="desc">'+(wrong?('共 '+wrong+' 題待複習,答對即移除'):'目前沒有錯題 🎉')+'</div></a>'
+      + '<a class="card" id="mMix10"><div class="title"><span class="emo">🔀</span> 綜合測驗 · 10 題</div><div class="desc">全部科目隨機抽題</div></a>'
+      + '<a class="card" id="mMix20"><div class="title"><span class="emo">🔀</span> 綜合測驗 · 20 題</div><div class="desc">全部科目隨機抽題</div></a>'
+      + '<a class="card" id="mMixAll"><div class="title"><span class="emo">📚</span> 綜合測驗 · 全部</div><div class="desc">全部科目共 '+poolN+' 題</div></a>'
+      + '</div>'
+      + '<div class="label">各科錯題</div>'
+      + '<div class="grid">' + (rows || '<div class="card locked"><div class="title">尚無題庫</div></div>') + '</div>'
+      + (wrong ? '<button class="btn ghost" id="clearWrong" style="max-width:320px;margin:18px auto 0">清除全部錯題記錄</button>' : '');
+
+    document.getElementById('mWrong').addEventListener('click', function(){ startQuiz('錯題複習', PE.shuffle(allWrong()), '目前沒有錯題,先去各科練習吧 🎉'); });
+    document.getElementById('mMix10').addEventListener('click', function(){ startQuiz('綜合測驗 · 10 題', PE.shuffle(allItems()).slice(0,10)); });
+    document.getElementById('mMix20').addEventListener('click', function(){ startQuiz('綜合測驗 · 20 題', PE.shuffle(allItems()).slice(0,20)); });
+    document.getElementById('mMixAll').addEventListener('click', function(){ startQuiz('綜合測驗 · 全部', allItems()); });
+    var cw = document.getElementById('clearWrong');
+    if(cw) cw.addEventListener('click', function(){ if(confirm('確定清除全部錯題記錄?')){ Store.clear(); renderMenu(); } });
+  }
+
+  loadAll(window.EXAM_MANIFEST || [], renderMenu);
+})();
+</script>
+</body>
+</html>
