@@ -52,6 +52,8 @@ window.EXAM_MANIFEST = [
   { id: "vocab-1", name: "警察英文單字 (1)", subject: "英文", file: "data/vocab-1.js" },
   { id: "vocab-2", name: "警察英文單字 (2)", subject: "英文", file: "data/vocab-2.js" },
   { id: "vocab-3", name: "警察英文單字 (3)", subject: "英文", file: "data/vocab-3.js" },
+  { id: "vocab-4", name: "警察英文單字 (4)", subject: "英文", file: "data/vocab-4.js" },
 
-  { id: "quotes-1", name: "名言佳句", subject: "國文", file: "data/quotes-1.js", law: true }
+  { id: "quotes-1", name: "名言佳句", subject: "國文", file: "data/quotes-1.js", law: true },
+  { id: "quotes-2", name: "名言佳句 (2)", subject: "國文", file: "data/quotes-2.js", law: true }
 ];
