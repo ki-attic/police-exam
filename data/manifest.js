@@ -13,6 +13,7 @@ window.EXAM_MANIFEST = [
   { id: "law-security-population", name: "治安顧慮人口查訪辦法", subject: "警察法規", file: "data/law-security-population.js", law: true },
   { id: "law-guns-rules", name: "槍砲彈藥刀械許可及管理辦法", subject: "警察法規", file: "data/law-guns-rules.js", law: true },
   { id: "law-social-order-rules", name: "違反社會秩序維護法案件處理辦法", subject: "警察法規", file: "data/law-social-order-rules.js", law: true },
+  { id: "cons-interpretations", name: "警察法規相關釋憲要旨", subject: "警察法規", file: "data/cons-interpretations.js", law: true },
 
   { id: "law-police-duty", name: "警察勤務條例", subject: "警察勤務", file: "data/law-police-duty.js", law: true },
   { id: "law-police-visit", name: "警察勤務區訪查辦法", subject: "警察勤務", file: "data/law-police-visit.js", law: true },

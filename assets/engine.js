@@ -30,8 +30,9 @@ window.PE = (function(){
     var lastChap = '';
     (articles||[]).forEach(function(a){
       if(a.chapter && a.chapter !== lastChap){ html += '<div class="chapter">'+esc(a.chapter)+'</div>'; lastChap = a.chapter; }
+      var noLabel = /^\d/.test(a.no) ? ('第 '+esc(a.no)+' 條') : esc(a.no);
       html += '<div class="article" data-text="'+esc('第'+a.no+'條 '+a.text)+'">'
-            + '<div class="no">第 '+esc(a.no)+' 條</div>'
+            + '<div class="no">'+noLabel+'</div>'
             + '<div class="body">'+esc(a.text)+'</div></div>';
     });
     view.innerHTML = html;
