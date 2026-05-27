@@ -68,6 +68,11 @@
     });
     var icon = subj === '警察法規' ? '🚓' : subj === '法學知識與英文' ? '⚖️' : subj === '行政法' ? '🏛️' : '📚';
     var cards = '';
+    if(subj === '英文'){
+      cards += '<a class="card" href="vocab.html?subject=' + encodeURIComponent(subj) + '">'
+        + '<div class="title"><span class="emo">📇</span> 單字卡</div>'
+        + '<div class="desc">翻卡記憶 · 🔊 發音 · 例句 · 同義字</div></a>';
+    }
     if(lawBanks.length){
       cards += '<a class="card" href="subject.html?subject=' + encodeURIComponent(subj) + '&view=laws">'
         + '<div class="title"><span class="emo">📖</span> 法條</div>'

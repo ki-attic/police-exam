@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>單字卡</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .flash { background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+    box-shadow: var(--shadow); padding: 30px 20px; min-height: 320px; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .flash .word { font-size: 38px; font-weight: 700; color: var(--text); letter-spacing: .01em; }
+  .flash .pos { font-size: 15px; color: var(--text-2); margin-top: 4px; }
+  .flash .hint { font-size: 13px; color: var(--text-3); margin-top: 22px; }
+  .flash .zh { font-size: 26px; font-weight: 700; color: var(--blue); }
+  .flash .ex { font-size: 16px; color: var(--text); margin-top: 18px; line-height: 1.6; }
+  .flash .exzh { font-size: 14px; color: var(--text-2); margin-top: 6px; }
+  .flash .syn { font-size: 14px; color: var(--green); margin-top: 16px; }
+  .flash .syn b { color: var(--text-2); font-weight: 600; }
+  .speak { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px;
+    border-radius: 50%; border: 1px solid var(--border); background: var(--bg); font-size: 18px; cursor: pointer;
+    margin-left: 8px; vertical-align: middle; }
+  .speak:active { background: var(--hover); }
+  .vcontrol { display: flex; gap: 10px; margin-top: 16px; }
+  .vcontrol .btn { margin-top: 0; }
+  .vprogress { text-align: center; font-size: 13px; color: var(--text-2); margin: 14px 0 6px; }
+  .known-tag { font-size: 12px; color: var(--green); margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back" href="index.html" onclick="if(history.length>1){history.back();return false;}">‹ 返回</a>
+  <h1>單字卡 🔊</h1>
+</div>
+
+<div class="wrap" id="wrap"><div class="empty">載入中…</div></div>
+
+<div class="footer-note">點卡片翻面 · 點 🔊 發音 · 國考英文常見字彙</div>
+
+<script src="assets/store.js"></script>
+<script src="data/manifest.js"></script>
+<script>
+(function(){
+  function esc(s){ return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+  function qp(k){ var m=location.search.match(new RegExp('[?&]'+k+'=([^&]*)')); return m?decodeURIComponent(m[1]):''; }
+  var subj = qp('subject') || '英文';
+  var wrap = document.getElementById('wrap');
+
+  // 發音(Web Speech API)
+  function speak(text, lang){
+    if(!('speechSynthesis' in window)){ return; }
+    try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(text);
+      u.lang = lang || 'en-US'; u.rate = .9; speechSynthesis.speak(u); } catch(e){}
+  }
+  window.__speak = speak;
+
+  // 從 mcq 題目萃取單字卡欄位(優先用 entry.card,否則從 q/options/explain 推導)
+  function toCard(e){
+    var c = e.card || {};
+    var word = c.w || e.ref || '';
+    var pos = c.pos || (e.q && (e.q.match(/\(([a-zA-Z.\/]+)\)/)||[])[1]) || '';
+    var ex = c.ex || (e.q && (e.q.split(/例[:：]/)[1]||'').trim()) || '';
+    var zh = c.zh || (e.options && e.options[e.answer]) || '';
+    var exZh = c.exZh || (e.explain && (e.explain.split(/例句中譯[:：]/)[1]||'').trim()) || '';
+    var syn = c.syn || [];
+    return { word: word, pos: pos, ex: ex, zh: zh, exZh: exZh, syn: syn };
+  }
+
+  var banks = (window.EXAM_MANIFEST||[]).filter(function(m){ return m.subject === subj; });
+  if(!banks.length){ wrap.innerHTML = '<div class="empty">此科目尚無單字。</div>'; return; }
+
+  var remaining = banks.length, cards = [];
+  banks.forEach(function(m){
+    var s = document.createElement('script'); s.src = m.file;
+    s.onload = s.onerror = function(){ if(--remaining===0) build(); };
+    document.body.appendChild(s);
+  });
+
+  function build(){
+    var B = window.BANKS || {};
+    banks.forEach(function(m){ var bk=B[m.id]; if(bk&&bk.mcq) bk.mcq.forEach(function(e){ cards.push(toCard(e)); }); });
+    if(!cards.length){ wrap.innerHTML = '<div class="empty">尚無單字。</div>'; return; }
+    // 洗牌
+    for(var i=cards.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=cards[i];cards[i]=cards[j];cards[j]=t; }
+    pos = 0; flipped = false; render();
+  }
+
+  var pos = 0, flipped = false;
+  function render(){
+    var c = cards[pos];
+    var front =
+        '<div class="word">' + esc(c.word) + ' <button class="speak" onclick="event.stopPropagation();__speak(' + JSON.stringify(c.word).replace(/"/g,'&quot;') + ')">🔊</button></div>'
+      + (c.pos ? '<div class="pos">' + esc(c.pos) + '</div>' : '')
+      + '<div class="hint">點卡片看解答</div>';
+    var back =
+        '<div class="zh">' + esc(c.zh) + '</div>'
+      + (c.ex ? '<div class="ex">' + esc(c.ex) + ' <button class="speak" onclick="event.stopPropagation();__speak(' + JSON.stringify(c.ex).replace(/"/g,'&quot;') + ')">🔊</button></div>' : '')
+      + (c.exZh ? '<div class="exzh">' + esc(c.exZh) + '</div>' : '')
+      + (c.syn && c.syn.length ? '<div class="syn"><b>同義字:</b> ' + esc(c.syn.join('、')) + '</div>' : '');
+    wrap.innerHTML =
+        '<div class="vprogress">第 ' + (pos+1) + ' / ' + cards.length + ' 張</div>'
+      + '<div class="flash" id="flash">' + (flipped ? back : front) + '</div>'
+      + '<div class="vcontrol">'
+      + '<button class="btn ghost" id="prev">‹ 上一張</button>'
+      + '<button class="btn ghost" id="shuffle">🔀 洗牌</button>'
+      + '<button class="btn primary" id="next">下一張 ›</button>'
+      + '</div>';
+    document.getElementById('flash').addEventListener('click', function(){ flipped = !flipped; render(); if(flipped && cards[pos].word) __speak(cards[pos].word); });
+    document.getElementById('prev').addEventListener('click', function(){ pos=(pos-1+cards.length)%cards.length; flipped=false; render(); });
+    document.getElementById('next').addEventListener('click', function(){ pos=(pos+1)%cards.length; flipped=false; render(); });
+    document.getElementById('shuffle').addEventListener('click', function(){ for(var i=cards.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=cards[i];cards[i]=cards[j];cards[j]=t;} pos=0; flipped=false; render(); });
+  }
+})();
+</script>
+</body>
+</html>
