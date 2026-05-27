@@ -77,13 +77,6 @@
     var ready = readyBanks();
     var poolN = allItems().length;
 
-    var rows = ready.map(function(m){
-      var c = Store.bankWrongCount(m.id);
-      return '<a class="card" href="law.html?law='+m.id+'">'
-           + '<div class="title"><span class="emo">📘</span> '+m.name+'</div>'
-           + '<div class="desc">'+m.subject+' · 錯題 '+c+' 題</div></a>';
-    }).join('');
-
     var pickDesc = SUBJ ? '歷年考古題隨機抽題' : '全部科目隨機抽題';
     menu.innerHTML =
         '<div class="page-icon">'+(SUBJ?'✍️':'🎯')+'</div>'
@@ -97,8 +90,6 @@
       + '<a class="card" id="mMix20"><div class="title"><span class="emo">🔀</span> 混合測驗 · 20 題</div><div class="desc">'+pickDesc+'</div></a>'
       + '<a class="card" id="mMixAll"><div class="title"><span class="emo">📚</span> 混合測驗 · 全部</div><div class="desc">共 '+poolN+' 題</div></a>'
       + '</div>'
-      + '<div class="label">'+(SUBJ?'各年度/題庫錯題':'各科錯題')+'</div>'
-      + '<div class="grid">' + (rows || '<div class="card locked"><div class="title">尚無題庫</div></div>') + '</div>'
       + (wrong ? '<button class="btn ghost" id="clearWrong" style="max-width:320px;margin:18px auto 0">清除全部錯題記錄</button>' : '');
 
     document.getElementById('mWrong').addEventListener('click', function(){ startQuiz('錯題複習', PE.shuffle(allWrong()), '目前沒有錯題,先去各科練習吧 🎉'); });

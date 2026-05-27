@@ -59,7 +59,9 @@
   // 從 mcq 題目萃取單字卡欄位(優先用 entry.card,否則從 q/options/explain 推導)
   function toCard(e){
     var c = e.card || {};
-    var word = c.w || e.ref || '';
+    // 單字一律從題幹 q 的第一個詞取得(q 必以英文單字開頭),ref 僅作備援(可能含後綴雜訊)
+    var qword = e.q ? e.q.split(/[\s　(（例]/)[0].trim() : '';
+    var word = c.w || qword || e.ref || '';
     var pos = c.pos || (e.q && (e.q.match(/\(([a-zA-Z.\/]+)\)/)||[])[1]) || '';
     var ex = c.ex || (e.q && (e.q.split(/例[:：]/)[1]||'').trim()) || '';
     var zh = c.zh || (e.options && e.options[e.answer]) || '';

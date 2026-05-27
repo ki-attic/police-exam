@@ -15,6 +15,7 @@ window.EXAM_MANIFEST = [
   { id: "pastexam-113", name: "警察法規 考古題·113年", subject: "警察法規", file: "data/pastexam-113.js" },
   { id: "pastexam-114", name: "警察法規 考古題·114年", subject: "警察法規", file: "data/pastexam-114.js" },
 
+  { id: "lk-110", name: "法學知識與英文 考古題·110年", subject: "法學知識與英文", file: "data/lk-110.js" },
   { id: "lk-111", name: "法學知識與英文 考古題·111年", subject: "法學知識與英文", file: "data/lk-111.js" },
   { id: "lk-112", name: "法學知識與英文 考古題·112年", subject: "法學知識與英文", file: "data/lk-112.js" },
   { id: "lk-113", name: "法學知識與英文 考古題·113年", subject: "法學知識與英文", file: "data/lk-113.js" },
@@ -22,6 +23,7 @@ window.EXAM_MANIFEST = [
 
   { id: "law-admin-procedure", name: "行政程序法", subject: "行政法", file: "data/law-admin-procedure.js", law: true },
 
+  { id: "admin-110", name: "行政法 考古題·110年", subject: "行政法", file: "data/admin-110.js" },
   { id: "admin-111", name: "行政法 考古題·111年", subject: "行政法", file: "data/admin-111.js" },
   { id: "admin-112", name: "行政法 考古題·112年", subject: "行政法", file: "data/admin-112.js" },
   { id: "admin-113", name: "行政法 考古題·113年", subject: "行政法", file: "data/admin-113.js" },
@@ -31,6 +33,7 @@ window.EXAM_MANIFEST = [
   { id: "law-criminal-procedure", name: "刑事訴訟法", subject: "刑法與刑事訴訟法實務", file: "data/law-criminal-procedure.js", law: true },
 
   { id: "vocab-1", name: "警察英文單字 (1)", subject: "英文", file: "data/vocab-1.js" },
+  { id: "vocab-2", name: "警察英文單字 (2)", subject: "英文", file: "data/vocab-2.js" },
 
   { id: "quotes-1", name: "名言佳句", subject: "國文", file: "data/quotes-1.js", law: true }
 ];
