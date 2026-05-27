@@ -40,6 +40,7 @@
 
 <script src="assets/store.js"></script>
 <script src="data/manifest.js"></script>
+<script src="data/vocab-syn.js" onerror="void 0"></script>
 <script>
 (function(){
   function esc(s){ return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
@@ -63,7 +64,7 @@
     var ex = c.ex || (e.q && (e.q.split(/例[:：]/)[1]||'').trim()) || '';
     var zh = c.zh || (e.options && e.options[e.answer]) || '';
     var exZh = c.exZh || (e.explain && (e.explain.split(/例句中譯[:：]/)[1]||'').trim()) || '';
-    var syn = c.syn || [];
+    var syn = (window.VOCAB_SYN && window.VOCAB_SYN[(word||'').toLowerCase()]) || c.syn || [];
     return { word: word, pos: pos, ex: ex, zh: zh, exZh: exZh, syn: syn };
   }
 
