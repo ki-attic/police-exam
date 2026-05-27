@@ -34,6 +34,7 @@ window.EXAM_MANIFEST = [
   { id: "law-admin-procedure", name: "行政程序法", subject: "行政法", file: "data/law-admin-procedure.js", law: true },
   { id: "law-admin-penalty", name: "行政罰法", subject: "行政法", file: "data/law-admin-penalty.js", law: true },
   { id: "law-petition", name: "訴願法", subject: "行政法", file: "data/law-petition.js", law: true },
+  { id: "law-admin-litigation", name: "行政訴訟法", subject: "行政法", file: "data/law-admin-litigation.js", law: true },
   { id: "law-state-compensation", name: "國家賠償法", subject: "行政法", file: "data/law-state-compensation.js", law: true },
   { id: "law-civil-service", name: "公務員服務法", subject: "行政法", file: "data/law-civil-service.js", law: true },
   { id: "law-officer-protection", name: "公務人員保障法", subject: "行政法", file: "data/law-officer-protection.js", law: true },
