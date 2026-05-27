@@ -9,6 +9,8 @@ window.EXAM_MANIFEST = [
   { id: "law-guns", name: "槍砲彈藥刀械管制條例", subject: "警察法規", file: "data/law-guns.js", law: true },
   { id: "law-assembly", name: "集會遊行法", subject: "警察法規", file: "data/law-assembly.js", law: true },
   { id: "law-weapon-use", name: "警械使用條例", subject: "警察法規", file: "data/law-weapon-use.js", law: true },
+  { id: "law-admin-neutral", name: "公務人員行政中立法", subject: "警察法規", file: "data/law-admin-neutral.js", law: true },
+  { id: "law-security-population", name: "治安顧慮人口查訪辦法", subject: "警察法規", file: "data/law-security-population.js", law: true },
 
   { id: "law-police-duty", name: "警察勤務條例", subject: "警察勤務", file: "data/law-police-duty.js", law: true },
   { id: "law-police-visit", name: "警察勤務區訪查辦法", subject: "警察勤務", file: "data/law-police-visit.js", law: true },
@@ -28,6 +30,8 @@ window.EXAM_MANIFEST = [
   { id: "lk-114", name: "法學知識與英文 考古題·114年", subject: "法學知識與英文", file: "data/lk-114.js" },
 
   { id: "law-admin-procedure", name: "行政程序法", subject: "行政法", file: "data/law-admin-procedure.js", law: true },
+  { id: "law-state-compensation", name: "國家賠償法", subject: "行政法", file: "data/law-state-compensation.js", law: true },
+  { id: "law-civil-service", name: "公務員服務法", subject: "行政法", file: "data/law-civil-service.js", law: true },
 
   { id: "admin-110", name: "行政法 考古題·110年", subject: "行政法", file: "data/admin-110.js" },
   { id: "admin-111", name: "行政法 考古題·111年", subject: "行政法", file: "data/admin-111.js" },
