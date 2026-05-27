@@ -20,10 +20,15 @@ window.EXAM_MANIFEST = [
   { id: "lk-113", name: "法學知識與英文 考古題·113年", subject: "法學知識與英文", file: "data/lk-113.js" },
   { id: "lk-114", name: "法學知識與英文 考古題·114年", subject: "法學知識與英文", file: "data/lk-114.js" },
 
+  { id: "law-admin-procedure", name: "行政程序法", subject: "行政法", file: "data/law-admin-procedure.js", law: true },
+
   { id: "admin-111", name: "行政法 考古題·111年", subject: "行政法", file: "data/admin-111.js" },
   { id: "admin-112", name: "行政法 考古題·112年", subject: "行政法", file: "data/admin-112.js" },
   { id: "admin-113", name: "行政法 考古題·113年", subject: "行政法", file: "data/admin-113.js" },
   { id: "admin-114", name: "行政法 考古題·114年", subject: "行政法", file: "data/admin-114.js" },
+
+  { id: "law-criminal", name: "中華民國刑法", subject: "刑法與刑事訴訟法實務", file: "data/law-criminal.js", law: true },
+  { id: "law-criminal-procedure", name: "刑事訴訟法", subject: "刑法與刑事訴訟法實務", file: "data/law-criminal-procedure.js", law: true },
 
   { id: "vocab-1", name: "警察英文單字 (1)", subject: "英文", file: "data/vocab-1.js" },
 
