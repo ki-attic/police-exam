@@ -2,6 +2,7 @@
 window.EXAM_MANIFEST = [
   { id: "police-power", name: "警察職權行使法", subject: "警察法規", file: "data/police-power.js", law: true },
   { id: "law-police-act", name: "警察法", subject: "警察法規", file: "data/law-police-act.js", law: true },
+  { id: "law-police-act-rules", name: "警察法施行細則", subject: "警察法規", file: "data/law-police-act-rules.js", law: true },
   { id: "law-admin-exec", name: "行政執行法", subject: "警察法規", file: "data/law-admin-exec.js", law: true },
   { id: "law-social-order", name: "社會秩序維護法", subject: "警察法規", file: "data/law-social-order.js", law: true },
   { id: "law-guns", name: "槍砲彈藥刀械管制條例", subject: "警察法規", file: "data/law-guns.js", law: true },
