@@ -31,18 +31,22 @@
   var all = (window.EXAM_MANIFEST || []).filter(function(x){ return x.subject === subj; });
   var lawBanks = all.filter(function(x){ return x.law; });
   var examBanks = all.filter(function(x){ return !x.law; });
+  // 「閱讀類」卡片標籤:國文用「名言佳句」,其餘用「法條」
+  var isGuowen = (subj === '國文');
+  var rdLabel = isGuowen ? '名言佳句' : '法條';
+  var rdIcon = isGuowen ? '📜' : '📖';
   if(!all.length){ page.innerHTML = '<div class="empty">此科目尚無內容。</div>'; return; }
 
   // ---- 法條清單檢視 ----
   if(view === 'laws'){
-    document.getElementById('subjTitle').textContent = subj + '　法條';
+    document.getElementById('subjTitle').textContent = subj + '　' + rdLabel;
     var rows = lawBanks.map(function(x){
       return '<a class="card" href="law.html?law=' + encodeURIComponent(x.id) + '">'
-           + '<div class="title"><span class="emo">📖</span> ' + esc(x.name) + '</div>'
-           + '<div class="desc">點開閱讀完整條文(可搜尋)</div></a>';
+           + '<div class="title"><span class="emo">' + rdIcon + '</span> ' + esc(x.name) + '</div>'
+           + '<div class="desc">點開閱讀(可搜尋)</div></a>';
     }).join('');
-    page.innerHTML = '<div class="page-icon">📖</div><h1 class="page-title">' + esc(subj) + ' · 法條</h1>'
-      + '<p class="page-sub">' + lawBanks.length + ' 部法規 · 全國法規資料庫官方條文</p>'
+    page.innerHTML = '<div class="page-icon">' + rdIcon + '</div><h1 class="page-title">' + esc(subj) + ' · ' + rdLabel + '</h1>'
+      + '<p class="page-sub">' + lawBanks.length + (isGuowen ? ' 組 · 作文素材' : ' 部法規 · 全國法規資料庫官方條文') + '</p>'
       + '<div class="grid">' + rows + '</div>';
     return;
   }
@@ -75,12 +79,14 @@
     }
     if(lawBanks.length){
       cards += '<a class="card" href="subject.html?subject=' + encodeURIComponent(subj) + '&view=laws">'
-        + '<div class="title"><span class="emo">📖</span> 法條</div>'
-        + '<div class="desc">' + lawBanks.length + ' 部法規完整條文,可閱讀、搜尋</div></a>';
+        + '<div class="title"><span class="emo">' + rdIcon + '</span> ' + rdLabel + '</div>'
+        + '<div class="desc">' + (isGuowen ? (lawBanks.length + ' 組名言佳句,可閱讀、搜尋') : (lawBanks.length + ' 部法規完整條文,可閱讀、搜尋')) + '</div></a>';
     }
-    cards += '<a class="card" href="review.html?subject=' + encodeURIComponent(subj) + '">'
-      + '<div class="title"><span class="emo">✍️</span> 測驗題複習</div>'
-      + '<div class="desc">歷年考古題混合練習,共 ' + examQ + ' 題' + (examWrong?(' · 錯題 '+examWrong):'') + '</div></a>';
+    if(examQ > 0){
+      cards += '<a class="card" href="review.html?subject=' + encodeURIComponent(subj) + '">'
+        + '<div class="title"><span class="emo">✍️</span> 測驗題複習</div>'
+        + '<div class="desc">歷年考古題混合練習,共 ' + examQ + ' 題' + (examWrong?(' · 錯題 '+examWrong):'') + '</div></a>';
+    }
     cards += '<a class="card" href="review.html">'
       + '<div class="title"><span class="emo">🎯</span> 總複習</div>'
       + '<div class="desc">跨科目綜合測驗 · 我的錯題</div></a>';

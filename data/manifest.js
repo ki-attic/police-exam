@@ -25,5 +25,7 @@ window.EXAM_MANIFEST = [
   { id: "admin-113", name: "行政法 考古題·113年", subject: "行政法", file: "data/admin-113.js" },
   { id: "admin-114", name: "行政法 考古題·114年", subject: "行政法", file: "data/admin-114.js" },
 
-  { id: "vocab-1", name: "警察英文單字 (1)", subject: "英文", file: "data/vocab-1.js" }
+  { id: "vocab-1", name: "警察英文單字 (1)", subject: "英文", file: "data/vocab-1.js" },
+
+  { id: "quotes-1", name: "名言佳句", subject: "國文", file: "data/quotes-1.js", law: true }
 ];
