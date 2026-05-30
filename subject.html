@@ -29,7 +29,9 @@
   var page = document.getElementById('page');
 
   var all = (window.EXAM_MANIFEST || []).filter(function(x){ return x.subject === subj; });
-  var lawBanks = all.filter(function(x){ return x.law; });
+  var lawBanksAll = all.filter(function(x){ return x.law; });
+  var essayBanks = lawBanksAll.filter(function(x){ return x.kind === 'essay'; });
+  var lawBanks = lawBanksAll.filter(function(x){ return x.kind !== 'essay'; }); // 純法條/釋憲/名言,排除申論題
   var examBanks = all.filter(function(x){ return !x.law; });
   // 「閱讀類」卡片標籤:國文用「名言佳句」,其餘用「法條」
   var isGuowen = (subj === '國文');
@@ -47,6 +49,20 @@
     }).join('');
     page.innerHTML = '<div class="page-icon">' + rdIcon + '</div><h1 class="page-title">' + esc(subj) + ' · ' + rdLabel + '</h1>'
       + '<p class="page-sub">' + lawBanks.length + (isGuowen ? ' 組 · 作文素材' : ' 部法規 · 全國法規資料庫官方條文') + '</p>'
+      + '<div class="grid">' + rows + '</div>';
+    return;
+  }
+
+  // ---- 申論題清單檢視 ----
+  if(view === 'essays'){
+    document.getElementById('subjTitle').textContent = subj + '　申論題';
+    var rows = essayBanks.map(function(x){
+      return '<a class="card" href="law.html?law=' + encodeURIComponent(x.id) + '">'
+           + '<div class="title"><span class="emo">📜</span> ' + esc(x.name) + '</div>'
+           + '<div class="desc">' + esc(x.desc || '點開查看') + '</div></a>';
+    }).join('');
+    page.innerHTML = '<div class="page-icon">📜</div><h1 class="page-title">' + esc(subj) + ' · 申論題</h1>'
+      + '<p class="page-sub">' + essayBanks.length + ' 組 · 題目+爭點+應引法條+答題架構+關鍵字提示</p>'
       + '<div class="grid">' + rows + '</div>';
     return;
   }
@@ -83,6 +99,13 @@
       cards += '<a class="card" href="subject.html?subject=' + E + '&view=laws">'
         + '<div class="title"><span class="emo">' + rdIcon + '</span> ' + rdLabel + '</div>'
         + '<div class="desc">' + (isGuowen ? (lawBanks.length + ' 組名言佳句,可閱讀、搜尋') : (lawBanks.length + ' 部法規完整條文,可閱讀、搜尋')) + '</div></a>';
+    }
+    if(essayBanks.length){
+      var essayCount = 0;
+      essayBanks.forEach(function(x){ var bk=B[x.id]; if(bk&&bk.articles) essayCount += bk.articles.length; });
+      cards += '<a class="card" href="subject.html?subject=' + E + '&view=essays">'
+        + '<div class="title"><span class="emo">📜</span> 申論題</div>'
+        + '<div class="desc">共 ' + essayCount + ' 題 · 題目+爭點+應引法條+答題架構</div></a>';
     }
     if(pastQ > 0){
       var pastLabel = (subj==='英文') ? '單字測驗' : '歷年考古題';
