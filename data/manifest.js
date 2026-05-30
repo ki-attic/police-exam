@@ -56,8 +56,8 @@ window.EXAM_MANIFEST = [
   { id: "vocab-5", name: "警察英文單字 (5)", subject: "英文", file: "data/vocab-5.js" },
   { id: "vocab-6", name: "警察英文單字 (6)", subject: "英文", file: "data/vocab-6.js" },
 
-  { id: "quotes-1", name: "名言佳句", subject: "國文", file: "data/quotes-1.js", law: true },
-  { id: "quotes-2", name: "名言佳句 (2)", subject: "國文", file: "data/quotes-2.js", law: true },
-  { id: "quotes-3", name: "名言佳句 (3)", subject: "國文", file: "data/quotes-3.js", law: true },
-  { id: "quotes-4", name: "名言佳句 (4)", subject: "國文", file: "data/quotes-4.js", law: true }
+  { id: "quotes-1", name: "名言佳句 (1)", subject: "國文", file: "data/quotes-1.js", law: true, desc: "55則 · 天行健、岳陽樓記、論語、孟子、岳飛滿江紅等八大分類" },
+  { id: "quotes-2", name: "名言佳句 (2)", subject: "國文", file: "data/quotes-2.js", law: true, desc: "45則 · 李白將進酒、屈原、諸葛亮誡子書、孟子、戰國策等" },
+  { id: "quotes-3", name: "名言佳句 (3)", subject: "國文", file: "data/quotes-3.js", law: true, desc: "31則 · 王守仁、論語多則、文天祥、蘇軾、鄭板橋等" },
+  { id: "quotes-4", name: "名言佳句 (4)", subject: "國文", file: "data/quotes-4.js", law: true, desc: "22則嚴選 · 論語、董仲舒、唐太宗以人為鑑、詩經等" }
 ];

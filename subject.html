@@ -43,7 +43,7 @@
     var rows = lawBanks.map(function(x){
       return '<a class="card" href="law.html?law=' + encodeURIComponent(x.id) + '">'
            + '<div class="title"><span class="emo">' + rdIcon + '</span> ' + esc(x.name) + '</div>'
-           + '<div class="desc">點開閱讀(可搜尋)</div></a>';
+           + '<div class="desc">' + esc(x.desc || '點開閱讀(可搜尋)') + '</div></a>';
     }).join('');
     page.innerHTML = '<div class="page-icon">' + rdIcon + '</div><h1 class="page-title">' + esc(subj) + ' · ' + rdLabel + '</h1>'
       + '<p class="page-sub">' + lawBanks.length + (isGuowen ? ' 組 · 作文素材' : ' 部法規 · 全國法規資料庫官方條文') + '</p>'
