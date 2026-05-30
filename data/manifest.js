@@ -13,11 +13,12 @@ window.EXAM_MANIFEST = [
   { id: "law-security-population", name: "治安顧慮人口查訪辦法", subject: "警察法規", file: "data/law-security-population.js", law: true },
   { id: "law-guns-rules", name: "槍砲彈藥刀械許可及管理辦法", subject: "警察法規", file: "data/law-guns-rules.js", law: true },
   { id: "law-social-order-rules", name: "違反社會秩序維護法案件處理辦法", subject: "警察法規", file: "data/law-social-order-rules.js", law: true },
-  { id: "cons-interpretations", name: "警察法規相關釋憲要旨", subject: "警察法規", file: "data/cons-interpretations.js", law: true },
+  { id: "cons-interpretations", name: "釋字", subject: "警察法規", file: "data/cons-interpretations.js", law: true },
 
   { id: "law-police-duty", name: "警察勤務條例", subject: "警察勤務", file: "data/law-police-duty.js", law: true },
   { id: "law-police-visit", name: "警察勤務區訪查辦法", subject: "警察勤務", file: "data/law-police-visit.js", law: true },
   { id: "law-police-equipment", name: "警察勤務裝備機具配備標準", subject: "警察勤務", file: "data/law-police-equipment.js", law: true },
+  { id: "cons-police-duty", name: "釋字", subject: "警察勤務", file: "data/cons-police-duty.js", law: true },
   { id: "essay-police-duty", name: "警察勤務 申論題", subject: "警察勤務", file: "data/essay-police-duty.js", law: true, kind: "essay", desc: "4 題 · 113 升官等試題 · 含爭點/應引法條/答題架構" },
 
   { id: "law-pastexams", name: "警察法規 考古題·108年", subject: "警察法規", file: "data/law-pastexams.js" },
@@ -49,6 +50,8 @@ window.EXAM_MANIFEST = [
 
   { id: "law-criminal", name: "中華民國刑法", subject: "刑法與刑事訴訟法實務", file: "data/law-criminal.js", law: true },
   { id: "law-criminal-procedure", name: "刑事訴訟法", subject: "刑法與刑事訴訟法實務", file: "data/law-criminal-procedure.js", law: true },
+  { id: "law-essay-extras", name: "申論引用補充條文(道交§73・民§151)", subject: "刑法與刑事訴訟法實務", file: "data/law-essay-extras.js", law: true },
+  { id: "cons-criminal", name: "釋字", subject: "刑法與刑事訴訟法實務", file: "data/cons-criminal.js", law: true },
   { id: "essay-criminal", name: "刑法與刑事訴訟法實務 申論題", subject: "刑法與刑事訴訟法實務", file: "data/essay-criminal.js", law: true, kind: "essay", desc: "4 題 · 113 升官等試題 · 含爭點/應引法條/答題架構" },
 
   { id: "vocab-1", name: "警察英文單字 (1)", subject: "英文", file: "data/vocab-1.js" },
