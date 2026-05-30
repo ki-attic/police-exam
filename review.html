@@ -42,7 +42,34 @@
 
   function qp(k){ var m=location.search.match(new RegExp('[?&]'+k+'=([^&]*)')); return m?decodeURIComponent(m[1]):''; }
   var SUBJ = qp('subject');
-  function readyBanks(){ return (window.EXAM_MANIFEST||[]).filter(function(m){ return (window.BANKS||{})[m.id] && (!SUBJ || m.subject===SUBJ); }); }
+  var TYPE = qp('type'); // '' | 'past'(考古題) | 'law'(法條拆解題)
+  function readyBanks(){
+    return (window.EXAM_MANIFEST||[]).filter(function(m){
+      var b = (window.BANKS||{})[m.id]; if(!b) return false;
+      if(SUBJ && m.subject!==SUBJ) return false;
+      if(TYPE==='past' && m.law) return false;
+      if(TYPE==='law'){
+        if(!m.law) return false;
+        if(!((b.mcq&&b.mcq.length)||(b.cloze&&b.cloze.length))) return false;
+      }
+      return true;
+    });
+  }
+  function typeLabel(){
+    if(TYPE==='past') return SUBJ==='英文' ? '單字測驗' : '歷年考古題';
+    if(TYPE==='law') return '法條拆解題';
+    return '測驗題複習';
+  }
+  function typeDesc(){
+    if(TYPE==='past') return SUBJ==='英文' ? '所有單字混合測驗' : '歷年考古題混合練習(年份見題目標註)';
+    if(TYPE==='law') return '依法條拆解之選擇題與填空題';
+    return '歷年考古題混合練習(年份見題目標註)';
+  }
+  function typePickDesc(){
+    if(TYPE==='past') return SUBJ==='英文' ? '單字隨機抽題' : (SUBJ?'本科歷年考古題隨機抽題':'考古題隨機抽題');
+    if(TYPE==='law') return SUBJ?'本科法條拆解題隨機抽題':'法條拆解題隨機抽題';
+    return SUBJ?'本科題庫隨機抽題':'全部科目隨機抽題';
+  }
 
   function allItems(){
     var items = [];
@@ -70,18 +97,20 @@
   function renderMenu(){
     view.style.display = 'none';
     menu.style.display = 'block';
-    topTitle.textContent = SUBJ ? (SUBJ + ' · 測驗題複習') : '總複習';
+    var pageTitle = SUBJ ? (SUBJ + ' · ' + typeLabel()) : '總複習';
+    topTitle.textContent = pageTitle;
     var s = Store.stats();
     var pct = s.answered ? Math.round(s.correct / s.answered * 100) : 0;
     var wrong = Store.totalWrong();
     var ready = readyBanks();
     var poolN = allItems().length;
 
-    var pickDesc = SUBJ ? '歷年考古題隨機抽題' : '全部科目隨機抽題';
+    var pickDesc = typePickDesc();
+    var pageIcon = SUBJ ? (TYPE==='law' ? '📝' : '✍️') : '🎯';
     menu.innerHTML =
-        '<div class="page-icon">'+(SUBJ?'✍️':'🎯')+'</div>'
-      + '<h1 class="page-title">'+(SUBJ ? (SUBJ+' · 測驗題複習') : '總複習')+'</h1>'
-      + '<p class="page-sub">'+(SUBJ?'歷年考古題混合練習(年份見題目標註)':'統整全部科目,一次練到飽')+'</p>'
+        '<div class="page-icon">'+pageIcon+'</div>'
+      + '<h1 class="page-title">'+pageTitle+'</h1>'
+      + '<p class="page-sub">'+(SUBJ?typeDesc():'統整全部科目,一次練到飽')+'</p>'
       + '<div class="callout"><span class="ico">📊</span><span>累計作答 <strong>'+s.answered+'</strong> 題,答對率 <strong>'+pct+'%</strong>　·　待複習錯題 <strong>'+wrong+'</strong> 題　·　'+(SUBJ?'本科':'題庫')+'共 <strong>'+poolN+'</strong> 題</span></div>'
       + '<div class="label">開始複習</div>'
       + '<div class="grid">'

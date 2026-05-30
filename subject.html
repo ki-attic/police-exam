@@ -64,28 +64,37 @@
 
   function renderHub(){
     var B = window.BANKS || {};
-    var examQ = 0, examWrong = 0;
+    var pastQ = 0, lawQuizQ = 0, examWrong = 0;
     all.forEach(function(x){
       var bk = B[x.id]; if(!bk) return;
-      examQ += (bk.mcq?bk.mcq.length:0) + (bk.cloze?bk.cloze.length:0);
+      var q = (bk.mcq?bk.mcq.length:0) + (bk.cloze?bk.cloze.length:0);
+      if(x.law){ lawQuizQ += q; } else { pastQ += q; }
       examWrong += (window.Store ? Store.bankWrongCount(x.id) : 0);
     });
+    var E = encodeURIComponent(subj);
     var icon = subj === '警察法規' ? '🚓' : subj === '法學知識與英文' ? '⚖️' : subj === '行政法' ? '🏛️' : '📚';
     var cards = '';
     if(subj === '英文'){
-      cards += '<a class="card" href="vocab.html?subject=' + encodeURIComponent(subj) + '">'
+      cards += '<a class="card" href="vocab.html?subject=' + E + '">'
         + '<div class="title"><span class="emo">📇</span> 單字卡</div>'
         + '<div class="desc">翻卡記憶 · 🔊 發音 · 例句 · 同義字</div></a>';
     }
     if(lawBanks.length){
-      cards += '<a class="card" href="subject.html?subject=' + encodeURIComponent(subj) + '&view=laws">'
+      cards += '<a class="card" href="subject.html?subject=' + E + '&view=laws">'
         + '<div class="title"><span class="emo">' + rdIcon + '</span> ' + rdLabel + '</div>'
         + '<div class="desc">' + (isGuowen ? (lawBanks.length + ' 組名言佳句,可閱讀、搜尋') : (lawBanks.length + ' 部法規完整條文,可閱讀、搜尋')) + '</div></a>';
     }
-    if(examQ > 0){
-      cards += '<a class="card" href="review.html?subject=' + encodeURIComponent(subj) + '">'
-        + '<div class="title"><span class="emo">✍️</span> 測驗題複習</div>'
-        + '<div class="desc">歷年考古題混合練習,共 ' + examQ + ' 題' + (examWrong?(' · 錯題 '+examWrong):'') + '</div></a>';
+    if(pastQ > 0){
+      var pastLabel = (subj==='英文') ? '單字測驗' : '歷年考古題';
+      var pastDesc = (subj==='英文') ? ('全部單字混合測驗,共 '+pastQ+' 題') : ('考選部官方歷年題目,共 '+pastQ+' 題');
+      cards += '<a class="card" href="review.html?subject=' + E + '&type=past">'
+        + '<div class="title"><span class="emo">✍️</span> ' + pastLabel + '</div>'
+        + '<div class="desc">' + pastDesc + '</div></a>';
+    }
+    if(lawQuizQ > 0){
+      cards += '<a class="card" href="review.html?subject=' + E + '&type=law">'
+        + '<div class="title"><span class="emo">📝</span> 法條拆解題</div>'
+        + '<div class="desc">依法條時限/主體/列舉拆題,共 ' + lawQuizQ + ' 題</div></a>';
     }
     cards += '<a class="card" href="review.html">'
       + '<div class="title"><span class="emo">🎯</span> 總複習</div>'
