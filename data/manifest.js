@@ -31,6 +31,7 @@ window.EXAM_MANIFEST = [
   { id: "law-constitution", name: "中華民國憲法", subject: "法學知識與英文", file: "data/law-constitution.js", law: true },
   { id: "law-constitution-amend", name: "中華民國憲法增修條文", subject: "法學知識與英文", file: "data/law-constitution-amend.js", law: true },
   { id: "law-central-standard", name: "中央法規標準法", subject: "法學知識與英文", file: "data/law-central-standard.js", law: true },
+  { id: "cons-legal-knowledge", name: "釋字", subject: "法學知識與英文", file: "data/cons-legal-knowledge.js", law: true },
 
   { id: "lk-110", name: "法學知識與英文 考古題·110年", subject: "法學知識與英文", file: "data/lk-110.js" },
   { id: "lk-111", name: "法學知識與英文 考古題·111年", subject: "法學知識與英文", file: "data/lk-111.js" },
@@ -68,5 +69,10 @@ window.EXAM_MANIFEST = [
   { id: "quotes-1", name: "名言佳句 (1)", subject: "國文", file: "data/quotes-1.js", law: true, desc: "55則 · 天行健、岳陽樓記、論語、孟子、岳飛滿江紅等八大分類" },
   { id: "quotes-2", name: "名言佳句 (2)", subject: "國文", file: "data/quotes-2.js", law: true, desc: "45則 · 李白將進酒、屈原、諸葛亮誡子書、孟子、戰國策等" },
   { id: "quotes-3", name: "名言佳句 (3)", subject: "國文", file: "data/quotes-3.js", law: true, desc: "31則 · 王守仁、論語多則、文天祥、蘇軾、鄭板橋等" },
-  { id: "quotes-4", name: "名言佳句 (4)", subject: "國文", file: "data/quotes-4.js", law: true, desc: "22則嚴選 · 論語、董仲舒、唐太宗以人為鑑、詩經等" }
+  { id: "quotes-4", name: "名言佳句 (4)", subject: "國文", file: "data/quotes-4.js", law: true, desc: "22則嚴選 · 論語、董仲舒、唐太宗以人為鑑、詩經等" },
+
+  { id: "chinese-110", name: "國文 考古題·110 年", subject: "國文", file: "data/chinese-110.js" },
+  { id: "chinese-111", name: "國文 考古題·111 年", subject: "國文", file: "data/chinese-111.js" },
+  { id: "chinese-112", name: "國文 考古題·112 年", subject: "國文", file: "data/chinese-112.js" },
+  { id: "chinese-113", name: "國文 考古題·113 年", subject: "國文", file: "data/chinese-113.js" }
 ];
