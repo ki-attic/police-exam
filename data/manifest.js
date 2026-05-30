@@ -28,6 +28,10 @@ window.EXAM_MANIFEST = [
   { id: "pastexam-113", name: "警察法規 考古題·113年", subject: "警察法規", file: "data/pastexam-113.js" },
   { id: "pastexam-114", name: "警察法規 考古題·114年", subject: "警察法規", file: "data/pastexam-114.js" },
 
+  { id: "law-constitution", name: "中華民國憲法", subject: "法學知識與英文", file: "data/law-constitution.js", law: true },
+  { id: "law-constitution-amend", name: "中華民國憲法增修條文", subject: "法學知識與英文", file: "data/law-constitution-amend.js", law: true },
+  { id: "law-central-standard", name: "中央法規標準法", subject: "法學知識與英文", file: "data/law-central-standard.js", law: true },
+
   { id: "lk-110", name: "法學知識與英文 考古題·110年", subject: "法學知識與英文", file: "data/lk-110.js" },
   { id: "lk-111", name: "法學知識與英文 考古題·111年", subject: "法學知識與英文", file: "data/lk-111.js" },
   { id: "lk-112", name: "法學知識與英文 考古題·112年", subject: "法學知識與英文", file: "data/lk-112.js" },
