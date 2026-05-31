@@ -71,6 +71,10 @@ window.EXAM_MANIFEST = [
   { id: "quotes-3", name: "名言佳句 (3)", subject: "國文", file: "data/quotes-3.js", law: true, desc: "31則 · 王守仁、論語多則、文天祥、蘇軾、鄭板橋等" },
   { id: "quotes-4", name: "名言佳句 (4)", subject: "國文", file: "data/quotes-4.js", law: true, desc: "22則嚴選 · 論語、董仲舒、唐太宗以人為鑑、詩經等" },
 
+  { id: "chinese-105", name: "國文 考古題·105 年", subject: "國文", file: "data/chinese-105.js" },
+  { id: "chinese-106", name: "國文 考古題·106 年", subject: "國文", file: "data/chinese-106.js" },
+  { id: "chinese-107", name: "國文 考古題·107 年", subject: "國文", file: "data/chinese-107.js" },
+  { id: "chinese-108", name: "國文 考古題·108 年", subject: "國文", file: "data/chinese-108.js" },
   { id: "chinese-109", name: "國文 考古題·109 年", subject: "國文", file: "data/chinese-109.js" },
   { id: "chinese-110", name: "國文 考古題·110 年", subject: "國文", file: "data/chinese-110.js" },
   { id: "chinese-111", name: "國文 考古題·111 年", subject: "國文", file: "data/chinese-111.js" },
