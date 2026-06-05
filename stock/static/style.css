@@ -87,6 +87,10 @@ table.grid{width:100%;border-collapse:collapse;font-size:13px}
 .fbar .fill{height:100%;background:var(--accent)}
 .detail-foot{grid-column:1/-1;color:var(--dim);font-size:12px;margin-top:2px}
 .detail-sub{color:var(--accent);font-weight:700;border-top:1px solid var(--line);padding-top:8px;margin-top:6px}
+.tech-chip{display:inline-block;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:700;vertical-align:middle}
+.tech-chip.t-up{background:rgba(229,72,77,.16);color:#f5a3a5}
+.tech-chip.t-down{background:rgba(31,191,117,.16);color:#7fe9b8}
+.tech-chip.t-neu{background:rgba(230,184,0,.15);color:#f0d770}
 
 /* 減碼名單 */
 .reduce-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}

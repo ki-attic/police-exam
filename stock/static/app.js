@@ -364,7 +364,7 @@ function renderTable() {
     tr.innerHTML = `
       <td><span class="score-pill" style="background:${scoreColor(sc)}22;color:${scoreColor(sc)}">${sc===null?"—":Math.round(sc)}</span>${warn}</td>
       <td class="l">${s.code}</td>
-      <td class="l">${s.name||""}${isEtf(s)?' <span class="etf-tag">ETF</span>':""}</td>
+      <td class="l">${s.name||""}${isEtf(s)?' <span class="etf-tag">ETF</span>':""}${techChip(s)}</td>
       <td class="l">${s.industry||'<span class="na">—</span>'}</td>
       <td>${fmt(s.close)}</td>
       <td>${fmt(s.per)}</td>
@@ -382,6 +382,23 @@ function renderTable() {
     body.appendChild(tr);
     body.appendChild(detail);
   });
+}
+
+// 技術面多空判讀(個股 / ETF 共用):站上雙均線+正動能+未超買=偏多;跌破雙均線+負動能=偏空
+function techStance(s) {
+  const t = s.tech;
+  if (!t || s.close === null || s.close === undefined) return null;
+  const up20 = t.ma20 !== null && t.ma20 !== undefined && s.close > t.ma20;
+  const up60 = t.ma60 !== null && t.ma60 !== undefined && s.close > t.ma60;
+  const ret = t.ret20, rsi = t.rsi;
+  if (up20 && up60 && ret > 0 && (rsi === null || rsi === undefined || rsi < 70))
+    return { cls: "up", txt: "偏多" };
+  if (!up20 && !up60 && ret < 0) return { cls: "down", txt: "偏空" };
+  return { cls: "neu", txt: "中性" };
+}
+function techChip(s) {
+  const v = techStance(s);
+  return v ? ` <span class="tech-chip t-${v.cls}">技${v.txt}</span>` : "";
 }
 
 // 個股技術面明細(參考用,不計入個股分數):趨勢/動能 + MA/RSI/波動
@@ -402,7 +419,7 @@ function stockTech(s) {
     const tag = t.rsi >= 70 ? "超買" : (t.rsi <= 30 ? "超賣" : "中性");
     foot = `<div class="detail-foot">RSI(14) ${fmt(t.rsi)} · ${tag} · 年化波動 ${fmt(s.volatility)}%　·　技術面僅供參考,不計入個股分數</div>`;
   }
-  return `<div class="detail-foot detail-sub">技術面</div>${bars}${foot}`;
+  return `<div class="detail-foot detail-sub">技術面${techChip(s)}</div>${bars}${foot}`;
 }
 
 function factorBars(s) {
@@ -438,7 +455,7 @@ function techBars(s) {
     const tag = t.rsi >= 70 ? "超買" : (t.rsi <= 30 ? "超賣" : "中性");
     foot += `<div class="detail-foot">RSI(14) ${fmt(t.rsi)} · ${tag}　·　ETF 採技術面評分,無基本面(殖利率為配息推估)</div>`;
   }
-  return bars + foot;
+  return `<div class="detail-foot detail-sub">技術面${techChip(s)}</div>${bars}${foot}`;
 }
 
 function renderReduce(reduce) {
