@@ -356,6 +356,13 @@ function renderTable() {
     return sortDir * (x - y);
   });
   body.innerHTML = "";
+  if (!rows.length) {
+    const msg = searchTerm
+      ? `查無「${searchTerm}」— 此股不在前 100 名評分清單(僅收市值前段 + ETF)`
+      : "無符合條件的個股";
+    body.innerHTML = `<tr><td colspan="12" class="na" style="text-align:center;padding:18px">${msg}</td></tr>`;
+    return;
+  }
   rows.forEach((s) => {
     const tr = document.createElement("tr");
     tr.className = "row-main";

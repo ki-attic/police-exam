@@ -592,21 +592,35 @@ def build():
         mv_source = "twse:成交值(無股數)"
         log.warning("無股數資料,改用成交值排名")
 
+    # 題材/事件雷達點名的個股,即使不在市值前段(甚至上櫃無 TWSE 基本面)也補進表格,點 chip 才有資料
+    events = load_events()
+    ev_names, ev_codes = {}, set()
+    for e in events.get("events", []):
+        for o in (e.get("benefit", []) + e.get("pressure", [])):
+            if o.get("code"):
+                ev_codes.add(o["code"])
+                ev_names[o["code"]] = o.get("name") or ev_names.get(o["code"])
+    extra = [c for c in ev_codes if c not in picked]
+    if extra:
+        picked += extra
+        log.info("補入題材個股 %d 檔:%s", len(extra), ",".join(extra))
+
     stocks = []
     for i, code in enumerate(picked, 1):
-        q = quotes[code]
+        q = quotes.get(code, {})
         b = basic.get(code, {})
         f = fin.get(code, {})
+        listed = code in quotes  # 在 TWSE 行情內才有完整基本面
         rec = {
             "code": code,
-            "name": b.get("name") or q["name"],
-            "market": "上市",
+            "name": b.get("name") or q.get("name") or ev_names.get(code) or code,
+            "market": "上市" if listed else "上櫃",
             "industry": b.get("industry"),
-            "close": prices_all.get(code, {}).get("close", q["close"]),
+            "close": prices_all.get(code, {}).get("close") or q.get("close"),
             "price_date": prices_all.get(code, {}).get("date") or q.get("price_date"),
             "live": prices_all.get(code, {}).get("live", False),
             "market_value": mv.get(code),
-            "per": q["per"], "pbr": q["pbr"], "yield": q["yield"],
+            "per": q.get("per"), "pbr": q.get("pbr"), "yield": q.get("yield"),
             "roe": f.get("roe"),
             "debt_ratio": f.get("debt_ratio"),
             "rev_yoy": yoy.get(code),
@@ -626,11 +640,16 @@ def build():
         closes, _tk = _etf_history(code)
         if closes:
             close_now = rec["close"] or closes[-1]
+            if rec["close"] is None:          # 上櫃題材股無 TWSE 報價,用 yfinance 收盤
+                rec["close"] = close_now
+                rec["src"]["price"] = "yfinance:歷史價"
             tech, vol = _tech_from_closes(closes, close_now)
             rec["tech"] = tech
             rec["volatility"] = vol
             rec["src"]["volatility"] = "yfinance:歷史價"
             rec["src"]["tech"] = "yfinance:歷史價(MA/動能/RSI)"
+        if rec["close"] is None and not listed:
+            continue  # 既非上市又無 yfinance 價:略過,不放空殼列
         stocks.append(rec)
         if i % 20 == 0:
             log.info("個股技術面進度 %d/%d", i, len(picked))
@@ -647,7 +666,7 @@ def build():
         "etf_count": len(etfs),
         "price_date": price_date,
         "realtime": realtime_ok,
-        "events": load_events(),
+        "events": events,
         "prices": prices_all,
         "finmind_enabled": bool(config.FINMIND_TOKEN),
         "finmind_blocked": _finmind_blocked,
