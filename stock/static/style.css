@@ -59,6 +59,19 @@ body{margin:0;background:var(--bg);color:var(--txt);
 .spacer{flex:1}
 .search{background:var(--panel2);border:1px solid var(--line);color:var(--txt);
   border-radius:6px;padding:7px 12px;width:200px}
+.ind-filter{position:relative}
+.ind-btn{width:140px;text-align:left;cursor:pointer}
+.ind-menu{position:absolute;z-index:20;top:calc(100% + 4px);left:0;min-width:160px;
+  max-height:280px;overflow-y:auto;background:var(--panel);border:1px solid var(--line);
+  border-radius:6px;padding:4px;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.ind-opt{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:4px;
+  cursor:pointer;font-size:13px;white-space:nowrap}
+.ind-opt:hover{background:var(--panel2)}
+.ind-opt input{accent-color:var(--accent);width:15px;height:15px}
+.ind-all{border-bottom:1px solid var(--line);margin-bottom:4px;color:var(--accent)}
+.btn-clear{margin-top:10px;background:var(--panel2);border:1px solid var(--line);
+  color:var(--accent);border-radius:6px;padding:6px 14px;cursor:pointer;font-size:13px}
+.btn-clear:hover{border-color:var(--accent)}
 .weights{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
   gap:10px;margin-bottom:14px}
 .wt{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
@@ -154,7 +167,8 @@ table.grid{width:100%;border-collapse:collapse;font-size:13px}
   .panel{margin:10px;padding:12px}
   .macro-wrap{flex-direction:column}
   .strategy-row{gap:6px}
-  .strategy-row .search,.strategy-row #indFilter{flex:1;min-width:0}
+  .strategy-row .search,.strategy-row .ind-filter{flex:1;min-width:0}
+  .strategy-row .ind-btn{width:100%}
   .strategy-row .spacer{display:none}
   .weights{grid-template-columns:1fr 1fr}
   /* 明細在 12 欄表格的 td 內,寬度會跟著整張表(可達 900px+)。

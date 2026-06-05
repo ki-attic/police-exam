@@ -30,7 +30,7 @@ let weights = { ...STRATEGIES.dividend };
 let strat = "dividend";
 let sortKey = "score", sortDir = -1;
 let searchTerm = "";
-let indFilter = "";
+let indFilter = new Set();
 let macro = {};            // id -> -1/0/1
 let scoreMap = {};         // code -> score
 let reduceSet = new Set(); // code in 減碼名單
@@ -331,19 +331,34 @@ function renderWeights() {
   });
 }
 
+function updateIndBtn() {
+  const btn = $("#indFilterBtn");
+  if (btn) btn.textContent = (indFilter.size === 0 ? "全部產業" : `已選 ${indFilter.size} 類`) + " ▾";
+}
 function renderIndustryFilter() {
-  const sel = $("#indFilter");
+  const menu = $("#indFilterMenu");
   const inds = [...new Set(DATA.stocks.map((s) => s.industry).filter(Boolean))]
     .sort((a, b) => (a === "ETF" ? -1 : b === "ETF" ? 1 : a.localeCompare(b)));
-  sel.innerHTML = '<option value="">全部產業</option>' +
-    inds.map((i) => `<option value="${i}">${i}</option>`).join("");
-  sel.value = indFilter;
+  menu.innerHTML =
+    `<label class="ind-opt ind-all"><input type="checkbox" id="indAll"><span>全部產業</span></label>` +
+    inds.map((i) => `<label class="ind-opt"><input type="checkbox" value="${i}"${indFilter.has(i) ? " checked" : ""}><span>${i}</span></label>`).join("");
+  const allBox = $("#indAll");
+  allBox.checked = indFilter.size === 0;
+  allBox.onchange = () => { indFilter.clear(); renderIndustryFilter(); renderTable(); };
+  menu.querySelectorAll("input[type=checkbox]:not(#indAll)").forEach((cb) => {
+    cb.onchange = () => {
+      if (cb.checked) indFilter.add(cb.value); else indFilter.delete(cb.value);
+      allBox.checked = indFilter.size === 0;
+      updateIndBtn(); renderTable();
+    };
+  });
+  updateIndBtn();
 }
 
 function renderTable() {
   const body = $("#scoreBody");
   let rows = DATA.stocks.map((s) => ({ ...s, score: scoreMap[s.code] }));
-  if (indFilter) rows = rows.filter((s) => (s.industry || "") === indFilter);
+  if (indFilter.size) rows = rows.filter((s) => indFilter.has(s.industry || ""));
   if (searchTerm) {
     const t = searchTerm.toLowerCase();
     rows = rows.filter((s) => (s.code || "").toLowerCase().includes(t) || (s.name || "").includes(searchTerm));
@@ -357,10 +372,17 @@ function renderTable() {
   });
   body.innerHTML = "";
   if (!rows.length) {
-    const msg = searchTerm
-      ? `查無「${searchTerm}」— 此股不在前 100 名評分清單(僅收市值前段 + ETF)`
-      : "無符合條件的個股";
-    body.innerHTML = `<tr><td colspan="12" class="na" style="text-align:center;padding:18px">${msg}</td></tr>`;
+    if (searchTerm) {
+      body.innerHTML = `<tr><td colspan="12" class="na" style="text-align:center;padding:18px">查無「${searchTerm}」— 此股不在前 100 名評分清單(僅收市值前段 + ETF)<br><button id="clearSearch" class="btn-clear">✕ 清除,顯示全部</button></td></tr>`;
+      const cs = $("#clearSearch");
+      if (cs) cs.onclick = () => {
+        searchTerm = "";
+        const inp = $("#search"); if (inp) inp.value = "";
+        renderTable();
+      };
+    } else {
+      body.innerHTML = `<tr><td colspan="12" class="na" style="text-align:center;padding:18px">無符合條件的個股</td></tr>`;
+    }
     return;
   }
   rows.forEach((s) => {
@@ -603,7 +625,14 @@ document.querySelectorAll("#scoreTable th").forEach((th) => {
   };
 });
 $("#search").oninput = (e) => { searchTerm = e.target.value.trim(); renderTable(); };
-$("#indFilter").onchange = (e) => { indFilter = e.target.value; renderTable(); };
+$("#indFilterBtn").onclick = (e) => {
+  e.stopPropagation();
+  const m = $("#indFilterMenu"); m.hidden = !m.hidden;
+};
+document.addEventListener("click", (e) => {
+  const wrap = $("#indFilterWrap");
+  if (wrap && !wrap.contains(e.target)) $("#indFilterMenu").hidden = true;
+});
 $("#posForm").onsubmit = (e) => {
   e.preventDefault();
   const code = $("#posCode").value.trim();

@@ -48,7 +48,10 @@
     <button class="chip strat active" data-strat="dividend">高股息型</button>
     <button class="chip strat" data-strat="quality">品質成長型</button>
     <span class="spacer"></span>
-    <select id="indFilter" class="search"><option value="">全部產業</option></select>
+    <div id="indFilterWrap" class="ind-filter">
+      <button type="button" id="indFilterBtn" class="search ind-btn">全部產業 ▾</button>
+      <div id="indFilterMenu" class="ind-menu" hidden></div>
+    </div>
     <input id="search" class="search" placeholder="搜尋股號/股名…">
   </div>
   <div id="weights" class="weights"></div>
