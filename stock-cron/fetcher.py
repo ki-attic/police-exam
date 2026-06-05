@@ -70,10 +70,18 @@ def _today():
     return date.today().isoformat()
 
 
+_DEFAULT_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+    "Accept": "application/json, text/plain, */*",
+}
+
+
 def http_json(url, params=None, headers=None):
+    hdr = {**_DEFAULT_HEADERS, **(headers or {})}
     for attempt in range(1, config.MAX_RETRY + 1):
         try:
-            r = requests.get(url, params=params, headers=headers, timeout=config.HTTP_TIMEOUT)
+            r = requests.get(url, params=params, headers=hdr, timeout=config.HTTP_TIMEOUT)
             if r.status_code == 200:
                 return r.json()
             log.warning("GET %s -> HTTP %s (第%d次)", url, r.status_code, attempt)
