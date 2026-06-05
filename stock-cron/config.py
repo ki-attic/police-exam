@@ -20,8 +20,8 @@ FINMIND_SLEEP = 0.7         # 每次 FinMind 請求之間 sleep 秒數
 FINMIND_BATCH = 20          # 每批檔數,批與批之間多 sleep
 BATCH_PAUSE = 3.0           # 每批之間額外 sleep 秒
 HTTP_TIMEOUT = 15
-MAX_RETRY = 3
-RETRY_BACKOFF = 2.0         # retry 間隔 = RETRY_BACKOFF * 次數
+MAX_RETRY = 5
+RETRY_BACKOFF = 3.0         # retry 間隔 = RETRY_BACKOFF * 次數;撐過 TWSE 短暫抽風(空白回應)
 
 # === 路徑 ===
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
