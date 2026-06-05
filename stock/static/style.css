@@ -157,7 +157,13 @@ table.grid{width:100%;border-collapse:collapse;font-size:13px}
   .strategy-row .search,.strategy-row #indFilter{flex:1;min-width:0}
   .strategy-row .spacer{display:none}
   .weights{grid-template-columns:1fr 1fr}
-  .detail-inner{grid-template-columns:1fr}
+  /* 明細在 12 欄表格的 td 內,寬度會跟著整張表(可達 900px+)。
+     手機把它釘在視窗左緣、寬度綁螢幕,展開才不會延伸到畫面外。 */
+  .detail td{position:sticky;left:0;width:100vw}
+  .detail-inner{grid-template-columns:1fr;width:calc(100vw - 44px);box-sizing:border-box}
+  .detail-inner{text-align:left}
+  .fbar .ft{flex-direction:column;gap:0;flex-wrap:nowrap;align-items:flex-start}  /* 標籤/數值上下排+靠左,不被推出畫面 */
+  .detail-foot{white-space:normal;word-break:break-word;line-height:1.5}
   .event-list{grid-template-columns:1fr}
   .pos-form input{width:100%}
 }
