@@ -52,7 +52,7 @@ async function load() {
       r = await fetch("./data.json", { cache: "no-store" });
       STATIC_MODE = true;
       const btn = $("#btnRefresh");
-      if (btn) btn.style.display = "none";
+      if (btn) btn.textContent = "重新載入";
     }
     if (!r.ok) {
       $("#liveState").textContent = "尚無資料";
@@ -611,6 +611,13 @@ $("#posForm").onsubmit = (e) => {
 };
 $("#btnExport").onclick = exportCSV;
 $("#btnRefresh").onclick = async () => {
+  if (STATIC_MODE) {
+    // 靜態部署:無後端可抓,改重新載入雲端排程更新後的快照
+    $("#liveState").textContent = "重新載入快照…";
+    await load();
+    $("#liveState").textContent = "";
+    return;
+  }
   $("#liveState").textContent = "已要求重新抓取…";
   await fetch("/api/refresh", { method: "POST" });
   setTimeout(load, 3000);
