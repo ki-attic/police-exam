@@ -30,7 +30,8 @@ let weights = { ...STRATEGIES.dividend };
 let strat = "dividend";
 let sortKey = "score", sortDir = -1;
 let searchTerm = "";
-let indFilter = new Set();
+let indHidden = new Set(); // 被取消勾選(隱藏)的產業;空=全部顯示
+let indTotal = 0;
 let macro = {};            // id -> -1/0/1
 let scoreMap = {};         // code -> score
 let reduceSet = new Set(); // code in 減碼名單
@@ -333,23 +334,32 @@ function renderWeights() {
 
 function updateIndBtn() {
   const btn = $("#indFilterBtn");
-  if (btn) btn.textContent = (indFilter.size === 0 ? "全部產業" : `已選 ${indFilter.size} 類`) + " ▾";
+  if (!btn) return;
+  const shown = indTotal - indHidden.size;
+  btn.textContent = (indHidden.size === 0 ? "全部產業" : (shown <= 0 ? "未選任何" : `已選 ${shown} 類`)) + " ▾";
 }
 function renderIndustryFilter() {
   const menu = $("#indFilterMenu");
   const inds = [...new Set(DATA.stocks.map((s) => s.industry).filter(Boolean))]
     .sort((a, b) => (a === "ETF" ? -1 : b === "ETF" ? 1 : a.localeCompare(b)));
+  indTotal = inds.length;
   menu.innerHTML =
-    `<label class="ind-opt ind-all"><input type="checkbox" id="indAll"><span>全部產業</span></label>` +
-    inds.map((i) => `<label class="ind-opt"><input type="checkbox" value="${i}"${indFilter.has(i) ? " checked" : ""}><span>${i}</span></label>`).join("");
+    `<label class="ind-opt ind-all"><input type="checkbox" id="indAll"><span>全選</span></label>` +
+    inds.map((i) => `<label class="ind-opt"><input type="checkbox" value="${i}"${indHidden.has(i) ? "" : " checked"}><span>${i}</span></label>`).join("");
   const allBox = $("#indAll");
-  allBox.checked = indFilter.size === 0;
-  allBox.onchange = () => { indFilter.clear(); renderIndustryFilter(); renderTable(); };
+  const syncAll = () => {
+    allBox.checked = indHidden.size === 0;
+    allBox.indeterminate = indHidden.size > 0 && indHidden.size < inds.length;
+  };
+  syncAll();
+  allBox.onchange = () => {
+    if (allBox.checked) indHidden.clear(); else inds.forEach((i) => indHidden.add(i));
+    renderIndustryFilter(); renderTable();
+  };
   menu.querySelectorAll("input[type=checkbox]:not(#indAll)").forEach((cb) => {
     cb.onchange = () => {
-      if (cb.checked) indFilter.add(cb.value); else indFilter.delete(cb.value);
-      allBox.checked = indFilter.size === 0;
-      updateIndBtn(); renderTable();
+      if (cb.checked) indHidden.delete(cb.value); else indHidden.add(cb.value);
+      syncAll(); updateIndBtn(); renderTable();
     };
   });
   updateIndBtn();
@@ -358,7 +368,7 @@ function renderIndustryFilter() {
 function renderTable() {
   const body = $("#scoreBody");
   let rows = DATA.stocks.map((s) => ({ ...s, score: scoreMap[s.code] }));
-  if (indFilter.size) rows = rows.filter((s) => indFilter.has(s.industry || ""));
+  if (indHidden.size) rows = rows.filter((s) => !indHidden.has(s.industry || ""));
   if (searchTerm) {
     const t = searchTerm.toLowerCase();
     rows = rows.filter((s) => (s.code || "").toLowerCase().includes(t) || (s.name || "").includes(searchTerm));
