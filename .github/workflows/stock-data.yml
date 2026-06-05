@@ -1,0 +1,41 @@
+name: 更新台股戰情台資料
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 台股盤中(09:00–14:00 TST = 01:00–06:00 UTC)每 30 分,週一至週五
+    - cron: "*/30 1-6 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stock-data
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 安裝套件
+        run: pip install -r stock-cron/requirements.txt
+      - name: 重抓資料
+        working-directory: stock-cron
+        run: python fetcher.py
+      - name: 複製快照到 Pages 目錄
+        run: cp stock-cron/data.json stock/data.json
+      - name: 有變更才 commit & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet stock/data.json; then
+            echo "資料無變更,略過"
+          else
+            git add stock/data.json
+            git commit -m "chore: 自動更新台股快照 $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
+            git push
+          fi
