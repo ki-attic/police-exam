@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台股風控戰情台</title>
+<link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">台股風控戰情台 <span class="sub">RISK CONTROL</span></div>
+  <div class="meta">
+    <span id="dataDate" class="badge">資料日期 —</span>
+    <span id="priceAsof" class="badge dim">報價 —</span>
+    <span id="dataSource" class="badge dim">來源 —</span>
+    <span id="liveState" class="badge dim"></span>
+    <button id="btnRefresh" class="btn">重新抓取</button>
+  </div>
+</header>
+
+<div class="notice">非即時資料,僅供研究參考,不構成投資建議。</div>
+
+<!-- 宏觀燈號 -->
+<section class="panel">
+  <h2>宏觀燈號 <small>選 6 個訊號,系統算總體燈號</small></h2>
+  <div class="macro-wrap">
+    <div id="macroSignals" class="macro-signals"></div>
+    <div class="macro-light-box">
+      <div id="macroLight" class="light light-yellow">黃</div>
+      <div id="macroLabel" class="light-label">中性</div>
+      <div id="macroRead" class="light-read"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 題材 / 事件雷達 -->
+<section class="panel" id="eventPanel">
+  <h2>題材 / 事件雷達 <small id="eventHint">近日新聞人工研判,點個股 chip 可帶入上方搜尋</small></h2>
+  <div id="eventList" class="event-list"></div>
+</section>
+
+<!-- 策略 + 評分 -->
+<section class="panel">
+  <h2>多因子評分 <small>0~100 綜合分數</small></h2>
+  <div class="strategy-row">
+    <span>策略模式:</span>
+    <button class="chip strat" data-strat="value">價值型</button>
+    <button class="chip strat active" data-strat="dividend">高股息型</button>
+    <button class="chip strat" data-strat="quality">品質成長型</button>
+    <span class="spacer"></span>
+    <select id="indFilter" class="search"><option value="">全部產業</option></select>
+    <input id="search" class="search" placeholder="搜尋股號/股名…">
+  </div>
+  <div id="weights" class="weights"></div>
+  <div class="table-scroll">
+    <table id="scoreTable" class="grid">
+      <thead><tr>
+        <th data-sort="score">分數</th>
+        <th data-sort="code">股號</th>
+        <th data-sort="name">股名</th>
+        <th data-sort="industry">產業</th>
+        <th data-sort="close">現價</th>
+        <th data-sort="per">PER</th>
+        <th data-sort="pbr">PBR</th>
+        <th data-sort="roe">ROE%</th>
+        <th data-sort="yield">殖利率%</th>
+        <th data-sort="debt_ratio">負債比%</th>
+        <th data-sort="rev_yoy">營收YoY%</th>
+        <th data-sort="volatility">波動%</th>
+      </tr></thead>
+      <tbody id="scoreBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 加碼名單 -->
+<section class="panel" id="addPanel">
+  <h2>綠燈加碼名單 <small id="addHint">燈號轉綠時自動列出 risk-on 最強個股</small></h2>
+  <div id="addList" class="reduce-list"></div>
+</section>
+
+<!-- 減碼名單 -->
+<section class="panel" id="reducePanel">
+  <h2>紅燈減碼名單 <small id="reduceHint">燈號轉紅時自動列出 risk-off 最脆弱個股</small></h2>
+  <div id="reduceList" class="reduce-list"></div>
+</section>
+
+<!-- 持倉 -->
+<section class="panel">
+  <h2>我的持倉</h2>
+  <form id="posForm" class="pos-form">
+    <input id="posCode" placeholder="股號" required>
+    <input id="posPrice" type="number" step="0.01" placeholder="買進價" required>
+    <input id="posShares" type="number" step="1" placeholder="股數" required>
+    <button class="btn" type="submit">加入</button>
+    <button class="btn ghost" type="button" id="btnExport">匯出 CSV</button>
+  </form>
+  <div id="posSummary" class="pos-summary"></div>
+  <div class="table-scroll">
+    <table class="grid">
+      <thead><tr>
+        <th>股號</th><th>股名</th><th>買價</th><th>股數</th><th>成本</th>
+        <th>現價</th><th>現值</th><th>損益</th><th>報酬%</th><th>評估</th><th></th>
+      </tr></thead>
+      <tbody id="posBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<script src="static/app.js"></script>
+</body>
+</html>
