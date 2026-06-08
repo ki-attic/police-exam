@@ -1,6 +1,6 @@
 {
   "fetch_date": "2026-06-08",
-  "generated_at": "2026-06-08 05:56:12",
+  "generated_at": "2026-06-08 11:04:13",
   "count": 128,
   "etf_count": 25,
   "price_date": "2026-06-08 13:30:00 即時",
@@ -8331,13 +8331,13 @@
     },
     "^VIX": {
       "name": "VIX 恐慌指數",
-      "last": 21.51,
+      "last": 19.59,
       "direction": "上升",
       "stance": "偏空"
     },
     "DX-Y.NYB": {
       "name": "美元指數 DXY",
-      "last": 100.05,
+      "last": 100.02,
       "direction": "上升",
       "stance": "偏空"
     },
@@ -8364,7 +8364,7 @@
       "roe": 38.62196572934366,
       "debt_ratio": 31.504175214475914,
       "rev_yoy": 17.495412466636576,
-      "volatility": 31.61360711180599,
+      "volatility": 31.613610028072088,
       "src": {
         "price": "twse:STOCK_DAY_ALL",
         "per_pbr_yield": "twse:BWIBBU_ALL",
@@ -11950,39 +11950,39 @@
       }
     },
     {
-      "code": "2049",
-      "name": "上銀",
-      "market": "上市",
-      "industry": "電機機械",
-      "close": 329.5,
-      "price_date": "2026-06-08 13:30:00",
-      "live": true,
-      "market_value": 122058322800.0,
-      "per": 75.16,
-      "pbr": 3.25,
-      "yield": 0.58,
-      "roe": 5.833003453689135,
-      "debt_ratio": 31.28832919238935,
-      "rev_yoy": 20.68680916656098,
-      "volatility": 46.570570635716386,
+      "code": "3324",
+      "name": "雙鴻",
+      "market": "上櫃",
+      "industry": null,
+      "close": 1095.0,
+      "price_date": null,
+      "live": false,
+      "market_value": null,
+      "per": null,
+      "pbr": null,
+      "yield": null,
+      "roe": null,
+      "debt_ratio": null,
+      "rev_yoy": null,
+      "volatility": 60.3232761109722,
       "src": {
-        "price": "twse:STOCK_DAY_ALL",
+        "price": "yfinance:歷史價",
         "per_pbr_yield": "twse:BWIBBU_ALL",
-        "industry": "twse:t187ap03_L",
-        "market_value": "twse:t187ap03_L×收盤價",
-        "roe": "twse:t187ap06/07_L(年化)",
-        "debt_ratio": "twse:t187ap07_L",
-        "rev_yoy": "twse:t187ap05_L",
+        "industry": null,
+        "market_value": null,
+        "roe": null,
+        "debt_ratio": null,
+        "rev_yoy": null,
         "volatility": "yfinance:歷史價",
         "tech": "yfinance:歷史價(MA/動能/RSI)"
       },
       "tech": {
-        "trend": 0.5,
-        "momentum": 0.19373219373219355,
-        "ma20": 375.325,
-        "ma60": 303.9166666666667,
-        "ret20": -6.125356125356129,
-        "rsi": 35.33123028391168
+        "trend": 1.0,
+        "momentum": 0.6168224299065423,
+        "ma20": 1058.35,
+        "ma60": 1048.8166666666666,
+        "ret20": 2.336448598130847,
+        "rsi": 60.35313001605137
       }
     },
     {
@@ -12022,39 +12022,39 @@
       }
     },
     {
-      "code": "3324",
-      "name": "雙鴻",
-      "market": "上櫃",
-      "industry": null,
-      "close": 1095.0,
-      "price_date": null,
-      "live": false,
-      "market_value": null,
-      "per": null,
-      "pbr": null,
-      "yield": null,
-      "roe": null,
-      "debt_ratio": null,
-      "rev_yoy": null,
-      "volatility": 60.3232761109722,
+      "code": "2049",
+      "name": "上銀",
+      "market": "上市",
+      "industry": "電機機械",
+      "close": 329.5,
+      "price_date": "2026-06-08 13:30:00",
+      "live": true,
+      "market_value": 122058322800.0,
+      "per": 75.16,
+      "pbr": 3.25,
+      "yield": 0.58,
+      "roe": 5.833003453689135,
+      "debt_ratio": 31.28832919238935,
+      "rev_yoy": 20.68680916656098,
+      "volatility": 46.570570635716386,
       "src": {
-        "price": "yfinance:歷史價",
+        "price": "twse:STOCK_DAY_ALL",
         "per_pbr_yield": "twse:BWIBBU_ALL",
-        "industry": null,
-        "market_value": null,
-        "roe": null,
-        "debt_ratio": null,
-        "rev_yoy": null,
+        "industry": "twse:t187ap03_L",
+        "market_value": "twse:t187ap03_L×收盤價",
+        "roe": "twse:t187ap06/07_L(年化)",
+        "debt_ratio": "twse:t187ap07_L",
+        "rev_yoy": "twse:t187ap05_L",
         "volatility": "yfinance:歷史價",
         "tech": "yfinance:歷史價(MA/動能/RSI)"
       },
       "tech": {
-        "trend": 1.0,
-        "momentum": 0.6168224299065423,
-        "ma20": 1058.35,
-        "ma60": 1048.8166666666666,
-        "ret20": 2.336448598130847,
-        "rsi": 60.35313001605137
+        "trend": 0.5,
+        "momentum": 0.19373219373219355,
+        "ma20": 375.325,
+        "ma60": 303.9166666666667,
+        "ret20": -6.125356125356129,
+        "rsi": 35.33123028391168
       }
     },
     {
@@ -12110,8 +12110,8 @@
       "roe": null,
       "debt_ratio": null,
       "rev_yoy": null,
-      "volatility": 20.132715909036474,
-      "tech_score": 79.45176057091955,
+      "volatility": 20.132722831773574,
+      "tech_score": 79.4517451748163,
       "div": {
         "ttm": 3.598,
         "count": 4
@@ -12119,7 +12119,7 @@
       "tech": {
         "trend": 1.0,
         "momentum": 0.9031908409915574,
-        "lowvol": 0.627758875021768,
+        "lowvol": 0.6277585670997031,
         "ma20": 48.12050018310547,
         "ma60": 42.391648610432945,
         "ret20": 8.06381681983115,
@@ -12369,8 +12369,8 @@
       "roe": null,
       "debt_ratio": null,
       "rev_yoy": null,
-      "volatility": 25.539720068372084,
-      "tech_score": 64.29536743965757,
+      "volatility": 25.539725802766156,
+      "tech_score": 64.29535468641822,
       "div": {
         "ttm": 2.9499999999999997,
         "count": 4
@@ -12378,7 +12378,7 @@
       "tech": {
         "trend": 1.0,
         "momentum": 0.7466275448964195,
-        "lowvol": 0.38725633083458355,
+        "lowvol": 0.3872560757697966,
         "ma20": 85.16486625671386,
         "ma60": 74.02337601979573,
         "ret20": 4.932550897928389,
@@ -12406,8 +12406,8 @@
       "roe": null,
       "debt_ratio": null,
       "rev_yoy": null,
-      "volatility": 19.619960915537426,
-      "tech_score": 82.5283061111606,
+      "volatility": 19.619961641722586,
+      "tech_score": 82.52830449613154,
       "div": {
         "ttm": 1.88,
         "count": 4
@@ -12415,7 +12415,7 @@
       "tech": {
         "trend": 1.0,
         "momentum": 1.0,
-        "lowvol": 0.6505661222232122,
+        "lowvol": 0.6505660899226307,
         "ma20": 29.539431667327882,
         "ma60": 25.380710283915203,
         "ret20": 12.682264284421407,
@@ -12480,8 +12480,8 @@
       "roe": null,
       "debt_ratio": null,
       "rev_yoy": null,
-      "volatility": 30.20109494068321,
-      "tech_score": 34.11734101484193,
+      "volatility": 30.20109960334803,
+      "tech_score": 34.11733064511851,
       "div": {
         "ttm": 3.01,
         "count": 4
@@ -12489,7 +12489,7 @@
       "tech": {
         "trend": 0.5,
         "momentum": 0.506068952440772,
-        "lowvol": 0.17991923932052967,
+        "lowvol": 0.1799190319260614,
         "ma20": 34.366521739959715,
         "ma60": 29.103040822347005,
         "ret20": 0.12137904881543982,
@@ -12554,8 +12554,8 @@
       "roe": null,
       "debt_ratio": null,
       "rev_yoy": null,
-      "volatility": 20.64726961487632,
-      "tech_score": 79.07563898620154,
+      "volatility": 20.647269613228733,
+      "tech_score": 79.07563898986575,
       "div": {
         "ttm": 1.0499999999999998,
         "count": 12
@@ -12563,7 +12563,7 @@
       "tech": {
         "trend": 1.0,
         "momentum": 0.9416028957392237,
-        "lowvol": 0.6048716214283414,
+        "lowvol": 0.6048716215016257,
         "ma20": 18.092971515655517,
         "ma60": 15.840221071243286,
         "ret20": 8.832057914784475,
@@ -12591,8 +12591,8 @@
       "roe": null,
       "debt_ratio": null,
       "rev_yoy": null,
-      "volatility": 25.799712555942257,
-      "tech_score": 63.1618356802557,
+      "volatility": 25.799716735720494,
+      "tech_score": 63.16182638446758,
       "div": {
         "ttm": 1.2,
         "count": 4
@@ -12600,7 +12600,7 @@
       "tech": {
         "trend": 1.0,
         "momentum": 0.7188620012345777,
-        "lowvol": 0.3756919131112828,
+        "lowvol": 0.37569172719552046,
         "ma20": 25.97549991607666,
         "ma60": 22.676962598164877,
         "ret20": 4.377240024691553,
@@ -12628,8 +12628,8 @@
       "roe": null,
       "debt_ratio": null,
       "rev_yoy": null,
-      "volatility": 16.294766543579758,
-      "tech_score": 89.70978659617262,
+      "volatility": 16.294765338972542,
+      "tech_score": 89.70978927520792,
       "div": {
         "ttm": 1.23,
         "count": 4
@@ -12637,7 +12637,7 @@
       "tech": {
         "trend": 1.0,
         "momentum": 0.9893139487973797,
-        "lowvol": 0.7984701524045006,
+        "lowvol": 0.7984702059852066,
         "ma20": 28.248000049591063,
         "ma60": 25.49413916269938,
         "ret20": 9.786278975947592,
@@ -12776,8 +12776,8 @@
       "roe": null,
       "debt_ratio": null,
       "rev_yoy": null,
-      "volatility": 26.85534424500321,
-      "tech_score": 65.03800912364142,
+      "volatility": 26.855347355942534,
+      "tech_score": 65.03800220494115,
       "div": {
         "ttm": 1.13,
         "count": 12
@@ -12785,9 +12785,9 @@
       "tech": {
         "trend": 1.0,
         "momentum": 0.9300564287418851,
-        "lowvol": 0.32873761097607423,
+        "lowvol": 0.32873747260206887,
         "ma20": 28.063193702697752,
-        "ma60": 23.209928480784097,
+        "ma60": 23.209928512573242,
         "ret20": 8.601128574837702,
         "rsi": 64.72331390049673
       },
@@ -12813,8 +12813,8 @@
       "roe": null,
       "debt_ratio": null,
       "rev_yoy": null,
-      "volatility": 21.03514455232164,
-      "tech_score": 78.77802342492957,
+      "volatility": 21.03515393955074,
+      "tech_score": 78.77800254781894,
       "div": {
         "ttm": 1.028,
         "count": 6
@@ -12822,9 +12822,9 @@
       "tech": {
         "trend": 1.0,
         "momentum": 0.9698536312333601,
-        "lowvol": 0.5876190160052475,
+        "lowvol": 0.5876185984630347,
         "ma20": 23.02833786010742,
-        "ma60": 19.776624393463134,
+        "ma60": 19.77662442525228,
         "ret20": 9.397072624667203,
         "rsi": 67.52334450760335
       },
@@ -12887,8 +12887,8 @@
       "roe": null,
       "debt_ratio": null,
       "rev_yoy": null,
-      "volatility": 19.617768143259294,
-      "tech_score": 74.411212856279,
+      "volatility": 19.617760771499167,
+      "tech_score": 74.41122925100528,
       "div": {
         "ttm": 0.7799999999999999,
         "count": 12
@@ -12896,7 +12896,7 @@
       "tech": {
         "trend": 1.0,
         "momentum": 0.5939015019932798,
-        "lowvol": 0.650663656328268,
+        "lowvol": 0.6506639842227939,
         "ma20": 20.210078620910643,
         "ma60": 18.797365442911783,
         "ret20": 1.878030039865597,
@@ -12924,8 +12924,8 @@
       "roe": null,
       "debt_ratio": null,
       "rev_yoy": null,
-      "volatility": 20.43201267377808,
-      "tech_score": 80.72231051624921,
+      "volatility": 20.4320206556526,
+      "tech_score": 80.72229276463415,
       "div": {
         "ttm": 0.8519999999999999,
         "count": 12
@@ -12933,9 +12933,9 @@
       "tech": {
         "trend": 1.0,
         "momentum": 1.0,
-        "lowvol": 0.6144462103249844,
+        "lowvol": 0.614445855292683,
         "ma20": 19.334096813201903,
-        "ma60": 17.218992900848388,
+        "ma60": 17.218992869059246,
         "ret20": 11.35529435834053,
         "rsi": 74.68103614923642
       },
@@ -12961,8 +12961,8 @@
       "roe": null,
       "debt_ratio": null,
       "rev_yoy": null,
-      "volatility": 17.16482119289515,
-      "tech_score": 84.00088660162464,
+      "volatility": 17.164814060945027,
+      "tech_score": 84.00090246301572,
       "div": {
         "ttm": 0.49999999999999994,
         "count": 12
@@ -12970,9 +12970,9 @@
       "tech": {
         "trend": 1.0,
         "momentum": 0.800618623462664,
-        "lowvol": 0.7597702826474275,
+        "lowvol": 0.7597705998752489,
         "ma20": 11.702499914169312,
-        "ma60": 10.570767084757486,
+        "ma60": 10.570767052968343,
         "ret20": 6.01237246925328,
         "rsi": 68.86446054705962
       },
